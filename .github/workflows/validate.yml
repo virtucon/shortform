@@ -51,6 +51,22 @@ jobs:
         # no `grep -q`: it closes the pipe on first match and the CLI dies with EPIPE
         run: npx -y skills@1.7.0 add . --list | grep shortform
 
+      - name: init always carries the skip-skills guard
+        # without it, init writes nine skills into the user's ~/.claude/skills and ~/.agents/skills
+        run: |
+          if grep -rn 'hyperframes@[0-9.]* init' skills/ | grep -v 'HYPERFRAMES_SKIP_SKILLS=1'; then
+            echo "init call above is missing HYPERFRAMES_SKIP_SKILLS=1"
+            exit 1
+          fi
+
+      - name: The 30s cap is stated where it is enforced
+        # the old 60s cap survived because only this ffprobe line actually enforced it
+        run: |
+          grep -q 'at most 30s' skills/shortform/references/deliver.md \
+            || { echo "deliver.md no longer gates the render at 30s"; exit 1; }
+          grep -q 'Hard cap 30s' skills/shortform/SKILL.md \
+            || { echo "SKILL.md no longer records the 30s cap on the brief"; exit 1; }
+
       - name: The hyperframes CLI is pinned everywhere the skill calls it
         run: |
           if grep -rn 'npx hyperframes\( \|`\)' skills/ | grep -v 'hyperframes@'; then

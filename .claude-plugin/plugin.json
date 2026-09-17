@@ -1,7 +1,7 @@
 {
   "name": "shortform",
   "description": "Turn the current project or any brief into a vertical 9:16 short-form video shaped around your objective, using HyperFrames.",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "author": {
     "name": "Conor Mather",
     "url": "https://github.com/Virtucon"

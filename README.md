@@ -25,7 +25,7 @@ It interrupts you once: here are three hooks and a storyboard, pick one. (Twice,
 
 Free. MIT. Runs on your machine. Works with the agent you already pay for.
 
-**Status: early.** Version 0.1.0. It works end to end — the example below is a real run — but it has been exercised on a handful of projects, not hundreds. Expect rough edges, and please report them.
+**Status: early.** Version 0.2.0. It works end to end — the example below is a real run — but it has been exercised on a handful of projects, not hundreds. Expect rough edges, and please report them.
 
 ## Install
 
@@ -51,6 +51,8 @@ Add `-g` to install for every project. The [`skills` CLI](https://github.com/ver
 - [Node.js](https://nodejs.org) 22 or newer
 - [FFmpeg](https://ffmpeg.org/download.html) (with `ffprobe`) on your `PATH`
 - Chrome, which renders the frames: `npx hyperframes@0.8.46 browser ensure`
+- A few GB of free disk — frames are extracted before the MP4 is written
+- In Docker on Linux: `--shm-size=512m`, since Chrome needs more than the default 64MB `/dev/shm`
 - The [HyperFrames](https://github.com/heygen-com/hyperframes) skills, which do the rendering: `npx hyperframes@0.8.46 skills update hyperframes-core hyperframes-animation hyperframes-creative hyperframes-keyframes hyperframes-cli`
 
 The skill runs `hyperframes doctor` first and tells you exactly what is missing and the command that fixes it. It never installs anything itself.
@@ -81,7 +83,7 @@ Things you can say in the brief:
 |---|---|---|
 | Objective | "attract customers", "get signups", "hire a designer" | it asks one question |
 | Platform | "TikTok", "Shorts", "Reels" | one video, safe for all three |
-| Length | "15 seconds" | 20–30s (never over 60) |
+| Length | "15 seconds" | 20–30s (30s is the cap; a longer request is capped and the plan says so) |
 | Call to action | "CTA: join the waitlist" | chosen to fit the objective |
 | Tone | "deadpan", "premium", "playful" | inferred from your project |
 | Your media | "use ./media/demo.mov" | UI is rebuilt from your code |
@@ -126,7 +128,7 @@ A landscape demo cropped to 9:16 dies in a feed. The scroll is ruthless and you 
 
 ## How it works
 
-1. **Preflight**: checks Node, FFmpeg, Chrome and the HyperFrames skills.
+1. **Preflight**: runs the HyperFrames doctor and stops if anything a render needs is missing.
 2. **Understand**: reads your README, landing page, styles and core flow for real copy, colours and fonts — straight from the files, no browser and no screenshots of your app.
 3. **Plan**: picks the playbook, writes three hooks and a storyboard, and asks you once.
 4. **Compose**: builds a 1080×1920 [HyperFrames](https://hyperframes.heygen.com/) composition in HTML and CSS, with captions and music, and runs `hyperframes check`.

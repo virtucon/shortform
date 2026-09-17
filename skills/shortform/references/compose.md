@@ -10,7 +10,9 @@ HYPERFRAMES_SKIP_SKILLS=1 npx hyperframes@0.8.46 init composition --non-interact
 cd composition
 ```
 
-`--resolution portrait` scaffolds the 1080×1920 canvas. `HYPERFRAMES_SKIP_SKILLS=1` stops `init` from linking skills into agent directories outside the output folder. Delete the `CLAUDE.md` and `AGENTS.md` that `init` writes into the composition; they route to the generic hyperframes workflow, which this skill replaces.
+`--resolution portrait` scaffolds the 1080×1920 canvas. Delete the `CLAUDE.md` and `AGENTS.md` that `init` writes into the composition; they route to the generic hyperframes workflow, which this skill replaces.
+
+`HYPERFRAMES_SKIP_SKILLS=1` is load-bearing, not tidiness. Without it, `init` installs nine skills into `~/.agents/skills/` and `~/.claude/skills/` — outside the output folder, in the middle of a run the user asked for a video from. The `--skip-skills` flag is currently ignored upstream and the environment variable is the documented opt-out, so keep it on the `init` line, and verify it still suppresses those writes whenever the CLI pin is raised (see CONTRIBUTING.md). If a run ever does write there, stop and tell the user what appeared rather than carrying on.
 
 **The composition is `composition/index.html`.** That one file is what `check`, `render` and `snapshot` read; they default to `index.html` at the composition root and nothing else is picked up. Write every scene into it. A scene file elsewhere (`compositions/scene.html`, `scenes/`) renders the empty scaffold with no error.
 
@@ -46,7 +48,7 @@ Copy everything the composition uses into `composition/assets/` and reference it
 - Volume 0.4 without voiceover, 0.13 under voiceover.
 - The bundled tracks are 60s. Set `data-duration` to the video length. End the video on a beat so the loop does not cut mid-phrase.
 - **Always fade the music out.** The track is longer than the video, so without a fade every video ends on a hard chop at full volume. Ramp the music element's volume to 0 over the last 0.8s, landing on the final frame — a `data-volume` keyframe or a timeline tween on the audio, whichever the hyperframes audio skill gives you. Fade the audio only: the picture holds the CTA fully readable to the last frame (Law 8). The fade is the one permitted exception to "no trailing silence" in `vertical.md` — it is a landing, not dead air.
-- Beat grid: run `npx hyperframes@0.8.46 beats` in the composition directory. It writes `beats/<audio path>.json` as `{"beats": [{"time", "strength"}, …]}`. The raw grid is far too dense to be useful (several beats a second), so reduce it first: keep the strongest third of the beats by `strength`, then thin to roughly one every 1–2 seconds across the whole video. Snap scene changes to the nearest of those when the shift is under 0.3s; otherwise keep the planned time. If the command finds no beats or fails, carry on with planned times.
+- Beat grid: run `npx hyperframes@0.8.46 beats` in the composition directory. It writes `beats/<audio path>.json` as `{"beats": [{"time", "strength"}, …]}`. The raw grid is far too dense to be useful (several beats a second), so reduce it first: keep the strongest third of the beats by `strength`, then thin to roughly one every 1–2 seconds across the whole video. Snap scene changes to the nearest of those when the shift is under 0.3s; otherwise keep the planned time. If the command finds no beats or fails, carry on with planned times — unless it failed because npm could not fetch the CLI, which is the one failure to stop on rather than absorb (see SKILL.md). The same goes for the `check` rounds below and the render retries in `deliver.md`: a fetch failure is not something a composition edit can fix, and retrying spends the attempts on the wrong problem.
 
 ## Kinetic captions
 

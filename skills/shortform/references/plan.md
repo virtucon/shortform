@@ -5,7 +5,9 @@ Write `<out>/plan.md`. It is the contract for the composition; someone should be
 ## Decide
 
 1. **Archetype** from `archetypes.md`, with one line on why.
-2. **Length.** Default 20–30s. Use the brief's number if given, capped at 60s. If the material is thin, go shorter. Platform nudges when named: `tiktok` and `reels` 15–30s, `shorts` up to 60s if the content earns it.
+2. **Length.** Default 20–30s, hard cap 30s on every platform — the capped number recorded from the brief in SKILL.md's Input section. If the material is thin, go shorter; on low `Memory` or few cores from Step 0, take the short end and say so on the Assumptions line. Platform nudges when named: `tiktok` and `reels` 15–25s, `shorts` 20–30s.
+
+   The cap is not negotiable by the brief: past 30s a feed video is being scrolled, not watched. A brief that asks for 45s or 60s gets 30s, and the plan says so on its Assumptions line — "requested 45s, capped at 30s" — so the user sees the trade rather than guessing. If they insist on longer after that, the honest answer is that this skill does not do it; make two videos instead.
 3. **Three hooks**, ranked, from three different patterns.
 4. **The one real thing** the video shows (screen, flow, number, image).
 5. **CTA** wording and the on-screen handle, URL or repo name.

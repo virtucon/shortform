@@ -26,12 +26,14 @@ Extract from the brief, in the user's words where possible:
 | Objective (what the viewer should do or feel) | ask — see below |
 | Audience | inferred from project or brief |
 | Platform (`tiktok`, `shorts`, `reels`) | universal |
-| Length in seconds | 20–30 (hard cap 60) |
+| Length in seconds | 20–30 |
 | Call to action wording | from the archetype |
 | Tone | inferred |
 | Media paths (images, screen recordings) | none |
 | Music (`off`, a mood, or a file path) | on, mood matched to tone |
 | Voiceover | off |
+
+**Hard cap 30s.** Whatever the brief asks for, record `min(requested, 30)` as the length and keep the original number to report. Every later step works from the recorded number.
 
 If the brief has no objective, ask exactly one question: "What should this video achieve, and for whom?" If you cannot ask, assume `announce-launch` for a project and `educate` for a topic, and say so in the plan's Assumptions line.
 
@@ -57,6 +59,8 @@ Paths such as `assets/music/` and `references/` in this skill are relative to th
 
 The pin covers the CLI only. The hyperframes domain skills read in Step 3 install from upstream `main` and carry no version, so their guidance can change under a fixed CLI pin. When their mechanics and this skill's format or story rules disagree, `compose.md` says which wins.
 
+**Every step needs the registry.** Each command fetches the pinned CLI through `npx`. If any call fails to reach it — a non-zero exit with an npm error such as `ENOTFOUND`, `ECONNREFUSED`, `ETIMEDOUT`, `E404`, `EAI_AGAIN` or `429`, rather than a normal CLI error — stop at that step and say the hyperframes CLI could not be fetched, quoting the error. Do not drop or change the pin, do not substitute a different version, and do not improvise around the missing command. Leave `<out>/` as it is: whatever is already on disk stays valid and the run can resume from that step once the registry is reachable.
+
 ## Step 0: Preflight
 
 Before any other work, run from the project directory:
@@ -65,21 +69,43 @@ Before any other work, run from the project directory:
 npx hyperframes@0.8.46 doctor --json
 ```
 
-The command always exits 0, and its top-level `ok` is false whenever any optional tool is absent, so ignore both. Read the `checks` array and require `ok: true` on exactly these four: `Node.js`, `FFmpeg`, `FFprobe`, `Chrome`. Everything else (`whisper-cpp`, `TTS (Kokoro)`, `BGM (MusicGen)`, `Docker`, `Docker running`) is optional; the only one that ever matters is `TTS (Kokoro)`, and only when the brief asks for voiceover.
+**First, did the command run at all?** `doctor` itself always exits 0 and always prints JSON, so anything else means the command never got to run. Stop before Step 1 either way — every later step shells out to the same CLI, and the expensive failure is the one that lands after the plan is approved — but say which failure it is, because the fixes differ:
+
+- **No JSON and one of the npm error codes above** — the registry could not be reached. Quote the error and offer: check the network or proxy, retry, or pre-install the pinned version (`npm install -g hyperframes@0.8.46`). An `E404` is different: the pin does not exist on the registry, so retrying will not help and this repo has to change it.
+- **No JSON and no npm error code** — the CLI was fetched and failed to run (an unsupported Node, a crash in a check). Quote the raw output as it stands and do not send the user looking at their network.
+
+Once the JSON is in hand, ignore the top-level `ok` — it is false whenever any optional tool is absent — and read the `checks` array in three groups.
+
+**Blocking.** Stop the run if `ok` is false on any of: `Node.js`, `FFmpeg`, `FFprobe`, `Chrome`, `Disk`, `Frames cache`, `Archive extractor`, and `/dev/shm` when it is present. `Disk` and `Frames cache` are what makes a render finish rather than start: frames are extracted into the cache directory and the MP4 is written to disk, so a full disk that passes preflight fails in Step 4, minutes of work later. `Archive extractor` unpacks the managed Chrome download. `/dev/shm` appears on Linux only — including Docker, where the default 64MB is below the 256MB Chrome needs and the render dies part-way through.
+
+Two of these do not fail the way you would expect, so read their `detail` as well as their `ok`:
+
+- **`Node.js` never reports `ok: false`** — it only echoes the running version. Read the version out of `detail` yourself and stop if it is below v22.
+- **`Disk` and `Frames cache` pass when they cannot measure** — `detail` reads `Unable to check` or `free space unknown`. Treat that as unproven rather than fine: say so, and say the render needs a few GB free. They fail only below 1GB and 2GB respectively, which is already tight.
+
+**Informational.** `Version`, `CPU`, `Memory`, `Environment` never block. Record `Memory` and `CPU` for Step 2, which decides length.
+
+**Optional.** `whisper-cpp`, `TTS (Kokoro)`, `BGM (MusicGen)`, `Docker`, `Docker running`. The only one that ever matters is `TTS (Kokoro)`, and only when the brief asks for voiceover — then it blocks too. A hosted voice key is not a substitute: `tts` synthesises through Kokoro and fails without it, whatever else is configured.
 
 Also confirm the hyperframes domain skills are available to you: `hyperframes-core`, `hyperframes-animation`, `hyperframes-creative`, `hyperframes-keyframes`, `hyperframes-cli`.
 
-If a required check fails, stop and tell the user what is missing and how to fix it. Do not install anything yourself.
+If a blocking check fails, stop and tell the user what is missing and how to fix it. Do not install anything yourself.
 
 | Missing | Tell the user |
 |---|---|
-| Node.js (needs 22+) | install from https://nodejs.org |
+| the CLI itself (no JSON, npm error code) | the npm registry could not be reached; quote the npm error, then: check the network, retry, or `npm install -g hyperframes@0.8.46`. On `E404` say instead that the pinned version is not on the registry and this repo has to move the pin |
+| the CLI itself (no JSON, no npm error) | the CLI was fetched but would not run; quote the output as it stands |
+| Node.js below v22 (read from `detail`) | install from https://nodejs.org |
 | FFmpeg / FFprobe | `brew install ffmpeg`, `apt install ffmpeg`, or https://ffmpeg.org/download.html |
 | Chrome | `npx hyperframes@0.8.46 browser ensure` |
+| Disk / Frames cache | relay the `hint` field, and say what the check reported free and that the render extracts frames to that path — a few GB is the working minimum |
+| Archive extractor | relay the `hint` field; without it the managed Chrome download cannot be unpacked |
+| `/dev/shm` (Linux) | relay the `hint` field; in Docker that means restarting the container with `--shm-size=512m`, which this skill cannot do from inside it |
+| TTS (Kokoro), voiceover asked for | relay the `hint` field, or offer to build the video without voiceover |
 | hyperframes skills | `npx hyperframes@0.8.46 skills update <name> …`, naming each missing skill. Bare `skills update` refreshes what is already installed and does not expand a partial install, so a skill that was never there stays missing. |
 | anything else | relay the `hint` field from that doctor check |
 
-**Gate:** the four required checks pass and the five skills are readable.
+**Gate:** `doctor` returned JSON, every blocking check passes (including Node v22+ read from `detail`, plus `TTS (Kokoro)` when the brief asks for voiceover), and the five skills are readable.
 
 ## Step 1: Understand the source
 

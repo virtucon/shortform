@@ -18,7 +18,7 @@ ffprobe -v error -select_streams v:0 \
   -of default=noprint_wrappers=1 ../shortform.mp4
 ```
 
-Must report `width=1080`, `height=1920`, and a duration within 1s of the plan and at most 60s. If not, fix the composition and render again — at most twice. If the third render is still wrong, stop and tell the user what `ffprobe` reported and what you changed between attempts. All three platforms accept H.264 MP4 at this size as is; do not re-encode.
+Must report `width=1080`, `height=1920`, and a duration within 1s of the plan and at most 30s. If not, fix the composition and render again — at most twice. If the third render is still wrong, stop and tell the user what `ffprobe` reported and what you changed between attempts. All three platforms accept H.264 MP4 at this size as is; do not re-encode.
 
 ## Truth check (gate)
 
@@ -80,4 +80,4 @@ Keep it short:
 1. Where the video is, its length, and the objective it was built for.
 2. That `post.md` has the caption, hashtags and title, and `cover.jpg` is the cover.
 3. The one thing to do before posting (from the CTA check).
-4. Offer one re-roll: a different hook from the plan, a different length, or a different track.
+4. Offer one re-roll: a different hook from the plan, a different length within the 30s cap, or a different track.

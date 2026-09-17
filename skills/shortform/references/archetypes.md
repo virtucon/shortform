@@ -17,7 +17,7 @@ If the objective sits between two archetypes, pick the one that matches the **ac
 
 ## Structures
 
-Timings are for a 25-second video. Scale proportionally, keeping the hook at 2–3s and the CTA at 3–4s. For 15 seconds, drop to two middle beats.
+Timings are for a 25-second video, and 30 seconds is the longest this skill builds. The hook stays at 2–3s and the CTA at 3–4s at every length; all other time is added to or taken from the middle beats. For 15 seconds, drop to two middle beats.
 
 ### attract-customers
 `Pain hook (0–2.5s)` → `Agitate: what it costs them (2.5–6s)` → `Reveal the product (6–9s)` → `Three proof beats: real UI doing the job (9–21s)` → `CTA (21–25s)`
