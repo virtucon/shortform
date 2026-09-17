@@ -1,6 +1,8 @@
 # /shortform
 
-**Tell your coding agent what you want a video to achieve. Get a vertical video ready for TikTok, YouTube Shorts and Reels.**
+**One line to your coding agent. One vertical video, ready to post.**
+
+You shipped the thing. The launch video never happened, because editing one costs an afternoon you would rather spend building. Type one sentence in the terminal you already have open, and `/shortform` reads your actual code, writes the hook, and renders a 1080×1920 video for TikTok, YouTube Shorts and Reels — captions, music on the beat, cover frame, caption and hashtags included.
 
 [![validate](https://github.com/Virtucon/shortform/actions/workflows/validate.yml/badge.svg)](https://github.com/Virtucon/shortform/actions/workflows/validate.yml)
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
@@ -15,7 +17,9 @@
 /shortform attract B2B customers for my invoicing app
 ```
 
-`/shortform` is an open-source [agent skill](https://agentskills.io). It reads the project you are in, or just your brief, and makes one 1080×1920 video built around your objective: the hook, the structure and the call to action all follow from what you want the viewer to do.
+That is the whole interface. No timeline, no flags, no stock footage, no "AI avatar". `/shortform` is an open-source [agent skill](https://agentskills.io): plain Markdown your agent reads, that builds the video out of your real UI, your real colours and your real words.
+
+It asks you once — three hooks and a storyboard, pick one — and then it renders.
 
 ## Install
 
@@ -40,7 +44,7 @@ Add `-g` to install for every project. The [`skills` CLI](https://github.com/ver
 
 - [Node.js](https://nodejs.org) 22 or newer
 - [FFmpeg](https://ffmpeg.org/download.html) on your `PATH`
-- The [HyperFrames](https://github.com/heygen-com/hyperframes) skills, which do the rendering: `npx hyperframes skills update`
+- The [HyperFrames](https://github.com/heygen-com/hyperframes) skills, which do the rendering: `npx hyperframes@0.8.46 skills update`
 
 The skill checks all of this first and tells you what is missing. It never installs anything itself.
 

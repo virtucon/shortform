@@ -5,7 +5,7 @@
 From `<out>/composition/`:
 
 ```bash
-npx hyperframes render --quality delivery --fps 30 --output ../shortform.mp4
+npx hyperframes@0.8.46 render --quality delivery --fps 30 --output ../shortform.mp4
 ```
 
 Use `--quality draft` while iterating. The final file is always `--quality delivery` (older CLI versions call it `high`).

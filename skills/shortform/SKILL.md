@@ -2,7 +2,7 @@
 name: shortform
 description: Turn the current project, or any brief, into a vertical 9:16 short-form video built for TikTok, YouTube Shorts and Instagram Reels, using HyperFrames. Takes a free-text objective such as "attract B2B customers" or "grow followers" and shapes the hook, structure and call to action around it. Use when someone says "/shortform", "shortform", "make a TikTok", "make a Short", "make a Reel", "short-form video", or wants a vertical social video about what they built.
 license: MIT
-compatibility: Requires Node.js 22+, FFmpeg on PATH, the hyperframes CLI (npx hyperframes) and the hyperframes domain skills.
+compatibility: Requires Node.js 22+, FFmpeg on PATH, the hyperframes CLI (npx hyperframes@0.8.46) and the hyperframes domain skills.
 ---
 
 # /shortform
@@ -51,12 +51,14 @@ Everything goes in `shortform-output/`. If that directory exists, use `shortform
 
 Paths such as `assets/music/` and `references/` in this skill are relative to the directory containing this SKILL.md. Resolve them from there, never from a hardcoded home-directory path.
 
+**Pinned CLI.** Every command in this skill runs `npx hyperframes@0.8.46`. Use that exact version; do not drop the pin for `npx hyperframes`, whose newest release can change flags and output shape under you. The pin is raised deliberately, in one pull request that re-runs the example.
+
 ## Step 0: Preflight
 
 Before any other work, run from the project directory:
 
 ```bash
-npx hyperframes doctor --json
+npx hyperframes@0.8.46 doctor --json
 ```
 
 The command always exits 0, and its top-level `ok` is false whenever any optional tool is absent, so ignore both. Read the `checks` array and require `ok: true` on exactly these four: `Node.js`, `FFmpeg`, `FFprobe`, `Chrome`. Everything else (`whisper-cpp`, `TTS (Kokoro)`, `BGM (MusicGen)`, `Docker`, `Docker running`) is optional; the only one that ever matters is `TTS (Kokoro)`, and only when the brief asks for voiceover.
@@ -69,8 +71,8 @@ If a required check fails, stop and tell the user what is missing and how to fix
 |---|---|
 | Node.js (needs 22+) | install from https://nodejs.org |
 | FFmpeg / FFprobe | `brew install ffmpeg`, `apt install ffmpeg`, or https://ffmpeg.org/download.html |
-| Chrome | `npx hyperframes browser ensure` |
-| hyperframes skills | `npx hyperframes skills update` (installs the core set) |
+| Chrome | `npx hyperframes@0.8.46 browser ensure` |
+| hyperframes skills | `npx hyperframes@0.8.46 skills update` (installs the core set) |
 | anything else | relay the `hint` field from that doctor check |
 
 **Gate:** the four required checks pass and the five skills are readable.
@@ -98,7 +100,7 @@ Pick the nearest objective archetype, write three hook options, and write `<out>
 
 Build the HyperFrames project in `<out>/composition/` with a 1080x1920 root.
 
-**Gate:** `npx hyperframes check` passes with zero errors inside `<out>/composition/`, and every rule in the vertical checklist holds.
+**Gate:** `npx hyperframes@0.8.46 check` passes with zero errors inside `<out>/composition/`, and every rule in the vertical checklist holds.
 
 ## Step 4: Render and deliver
 

@@ -26,12 +26,11 @@ examples/                        sample products and the videos made from them
 ## Before you open a pull request
 
 ```bash
-uvx --from "git+https://github.com/agentskills/agentskills#subdirectory=skills-ref" skills-ref validate ./skills/shortform
-claude plugin validate .        # if you have Claude Code
-npx skills add . --list
+uvx --from "git+https://github.com/agentskills/agentskills@69ef37e9424c0a7ea9dd2293b559e43ec8176379#subdirectory=skills-ref" skills-ref validate ./skills/shortform
+npx -y skills@1.7.0 add . --list
 ```
 
-CI runs the same checks.
+CI runs both of these, on the same pinned versions, plus the manifest, symlink, relative-link and CLI-pin checks in [`.github/workflows/validate.yml`](.github/workflows/validate.yml). `claude plugin validate .` is worth running too if you have Claude Code; CI cannot.
 
 ## Ground rules
 
@@ -40,6 +39,7 @@ CI runs the same checks.
 - **Say why.** A pull request that changes creative guidance should say what went wrong in a real video without it. A before and after clip is the best evidence.
 - **Music must be CC0 or public domain**, with the licence stated on the source page. Add it to `assets/music/CREDITS.md` in the same pull request. Keep each track near 1MB.
 - **Bump the version** in `.claude-plugin/plugin.json` when the skill's behaviour changes.
+- **Keep the hyperframes CLI pinned.** Every command in the skill says `npx hyperframes@<version>`, and CI fails on a bare `npx hyperframes`. Raising the pin is its own pull request: change every occurrence, re-run the example end to end, and say in the description what the new version changed.
 
 ## Reporting a bad video
 

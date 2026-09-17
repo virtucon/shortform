@@ -6,7 +6,7 @@
 
 ```bash
 cd <out>
-HYPERFRAMES_SKIP_SKILLS=1 npx hyperframes init composition --non-interactive --resolution portrait
+HYPERFRAMES_SKIP_SKILLS=1 npx hyperframes@0.8.46 init composition --non-interactive --resolution portrait
 cd composition
 ```
 
@@ -40,7 +40,7 @@ Copy everything the composition uses into `composition/assets/` and reference it
 
 - Volume 0.4 without voiceover, 0.13 under voiceover.
 - The bundled tracks are 60s. Set `data-duration` to the video length. End the video on a beat so the loop does not cut mid-phrase.
-- Beat grid: run `npx hyperframes beats` in the composition directory. It writes `beats/<audio path>.json` as `{"beats": [{"time", "strength"}, …]}`. The raw grid is far too dense to be useful (several beats a second), so reduce it first: keep the strongest third of the beats by `strength`, then thin to roughly one every 1–2 seconds across the whole video. Snap scene changes to the nearest of those when the shift is under 0.3s; otherwise keep the planned time. If the command finds no beats or fails, carry on with planned times.
+- Beat grid: run `npx hyperframes@0.8.46 beats` in the composition directory. It writes `beats/<audio path>.json` as `{"beats": [{"time", "strength"}, …]}`. The raw grid is far too dense to be useful (several beats a second), so reduce it first: keep the strongest third of the beats by `strength`, then thin to roughly one every 1–2 seconds across the whole video. Snap scene changes to the nearest of those when the shift is under 0.3s; otherwise keep the planned time. If the command finds no beats or fails, carry on with planned times.
 
 ## Kinetic captions
 
@@ -65,14 +65,14 @@ The captions are the script from `plan.md`, one card at a time.
 
 ## Voiceover (only when the brief asks)
 
-Generate narration with `npx hyperframes tts`. Run `npx hyperframes tts --help` for its current flags, and use the `media-use` skill for voice choice if it is installed. Write the audio into `assets/`. Time caption cards to the narration, word for word, and drop the music volume to 0.13.
+Generate narration with `npx hyperframes@0.8.46 tts`. Run `npx hyperframes@0.8.46 tts --help` for its current flags, and use the `media-use` skill for voice choice if it is installed. Write the audio into `assets/`. Time caption cards to the narration, word for word, and drop the music volume to 0.13.
 
 ## Check
 
 ```bash
-npx hyperframes check
+npx hyperframes@0.8.46 check
 ```
 
 Fix every error, including contrast and overflow findings, and re-run until clean. Then walk the checklist at the end of `vertical.md`. `check` does not know about platform safe zones; that part is on you.
 
-For a visual check, `npx hyperframes snapshot` writes key frames as PNGs. Look at the first frame, one mid scene and the last frame: is the hook readable, is everything inside the safe rectangle, does the last frame match the first?
+For a visual check, `npx hyperframes@0.8.46 snapshot` writes key frames as PNGs. Look at the first frame, one mid scene and the last frame: is the hook readable, is everything inside the safe rectangle, does the last frame match the first?
