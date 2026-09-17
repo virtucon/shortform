@@ -14,6 +14,9 @@ jobs:
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
       - uses: astral-sh/setup-uv@bec219d24cd3e171d82865faccec33120bb574f4 # v10.1.0
+        with:
+          # no Python project here, so there is nothing for the cache to key on
+          enable-cache: false
       - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
         with:
           node-version: 22
@@ -45,7 +48,8 @@ jobs:
           exit $fail
 
       - name: skills CLI discovers the skill
-        run: npx -y skills@1.7.0 add . --list | grep -q shortform
+        # no `grep -q`: it closes the pipe on first match and the CLI dies with EPIPE
+        run: npx -y skills@1.7.0 add . --list | grep shortform
 
       - name: The hyperframes CLI is pinned everywhere the skill calls it
         run: |

@@ -1,4 +1,5 @@
 .DS_Store
+.conor-test/
 node_modules/
 shortform-output*/
 !examples/**/shortform-output/
