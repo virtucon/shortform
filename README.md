@@ -8,33 +8,39 @@
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 [![Agent Skills](https://img.shields.io/badge/format-Agent%20Skills-8A2BE2)](https://agentskills.io)
 
-<p align="center"><img src="docs/shortform-flow.svg" alt="Describe goal, pick a hook and storyboard, then receive a post-ready video" width="900"></p>
+<p align="center"><img src="docs/shortform-flow.svg" alt="Run Shortform with no prompt, pick a hook and storyboard, then receive a post-ready video" width="900"></p>
 
 <p align="center">
   <img src="examples/paidly/demo.gif" alt="A 25-second vertical video for a fictional invoicing app, made by Shortform" width="300">
 </p>
 <p align="center"><sub>Real example: <code>/shortform attract freelancers as customers, TikTok, 25 seconds</code> · <a href="examples/paidly/shortform-output/shortform.mp4">watch with sound</a> · <a href="examples/paidly/shortform-output/post.md">read post kit</a></sub></p>
 
-## Quick start
+## Quick start — no prompt needed
 
 ```bash
 # Install for current project. Add -g for every project.
 npx skills add Virtucon/shortform
 ```
 
-Then tell agent what video should achieve:
+Run it in project root:
+
+```
+/shortform
+```
+
+It reads project, then asks one question: **“What should this video achieve, and for whom?”** Answer in plain words. Then pick one of three hooks and storyboard. It renders while you do something else.
+
+Want more control? Add brief after command. Fully optional:
 
 ```
 /shortform attract B2B customers for my invoicing app
 ```
 
-Agent shows three hooks and storyboard. Reply with pick. It renders while you do something else.
-
 | I use | I type |
 |---|---|
-| Claude Code, Cursor | `/shortform <brief>` |
-| Codex | `$shortform <brief>` |
-| Gemini CLI, OpenCode, others | “use shortform to …” |
+| Claude Code, Cursor | `/shortform` — add brief only if wanted |
+| Codex | `$shortform` — add brief only if wanted |
+| Gemini CLI, OpenCode, others | “use shortform” — add goal only if wanted |
 
 No flags. No timeline. No stock footage, watermark, or AI avatar. Skill builds from real UI, colours, and copy when project exists.
 
@@ -74,7 +80,7 @@ The skill runs `hyperframes doctor` first and tells you exactly what is missing 
 
 **One thing to know about that dependency.** `/shortform` pins the HyperFrames CLI to `0.8.46`, but the HyperFrames *skills* above install from the upstream repository's `main` branch — there is no version to pin, and nothing records which state you got. Upstream changes to those skills can therefore change how your videos come out with no change in this repository. The pin is raised here deliberately, one pull request at a time; the skills underneath move on their own.
 
-## Brief examples
+## Optional brief examples
 
 Say goal in plain words:
 
