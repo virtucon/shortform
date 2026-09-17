@@ -1,31 +1,46 @@
 # /shortform
 
-**One line in your terminal. One vertical video, ready to post.**
+**One line in terminal. One vertical video, ready to post.**
 
-You shipped the thing. Nobody saw it. The launch video never happened because editing one costs an afternoon you would rather spend building — so the best thing you made this month is still a link nobody clicks.
-
-Type one sentence into the terminal you already have open. `/shortform` reads your actual code, writes the hook, and renders a 1080×1920 video for TikTok, YouTube Shorts and Reels — kinetic captions, music cut to the beat, cover frame, caption and hashtags in the box. Ninety seconds of your attention, start to upload.
+`/shortform` reads project, writes hook, plans story, then renders a 1080×1920 video for TikTok, YouTube Shorts, and Reels. Output includes captions, music, cover frame, post copy, and hashtags.
 
 [![validate](https://github.com/Virtucon/shortform/actions/workflows/validate.yml/badge.svg)](https://github.com/Virtucon/shortform/actions/workflows/validate.yml)
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 [![Agent Skills](https://img.shields.io/badge/format-Agent%20Skills-8A2BE2)](https://agentskills.io)
 
+<p align="center"><img src="docs/shortform-flow.svg" alt="Describe goal, pick a hook and storyboard, then receive a post-ready video" width="900"></p>
+
 <p align="center">
-  <img src="examples/paidly/demo.gif" alt="A 25-second vertical video for a fictional invoicing app, made by /shortform" width="300">
+  <img src="examples/paidly/demo.gif" alt="A 25-second vertical video for a fictional invoicing app, made by Shortform" width="300">
 </p>
-<p align="center"><sub>Made with <code>/shortform attract freelancers as customers, TikTok, 25 seconds</code> · <a href="examples/paidly/shortform-output/shortform.mp4">watch with sound</a> · <a href="examples/paidly/shortform-output/post.md">the post kit it wrote</a></sub></p>
+<p align="center"><sub>Real example: <code>/shortform attract freelancers as customers, TikTok, 25 seconds</code> · <a href="examples/paidly/shortform-output/shortform.mp4">watch with sound</a> · <a href="examples/paidly/shortform-output/post.md">read post kit</a></sub></p>
+
+## Quick start
+
+```bash
+# Install for current project. Add -g for every project.
+npx skills add Virtucon/shortform
+```
+
+Then tell agent what video should achieve:
 
 ```
 /shortform attract B2B customers for my invoicing app
 ```
 
-That is the whole interface. No timeline. No flags. No stock footage, no watermark, no uncanny "AI avatar" reading your README aloud. `/shortform` is an open-source [agent skill](https://agentskills.io) — plain Markdown your agent reads — and it builds the video out of your real UI, your real colours and your real words.
+Agent shows three hooks and storyboard. Reply with pick. It renders while you do something else.
 
-It interrupts you once: here are three hooks and a storyboard, pick one. (Twice, if your brief never said what the video is for.) Then it renders while you go do something else.
+| I use | I type |
+|---|---|
+| Claude Code, Cursor | `/shortform <brief>` |
+| Codex | `$shortform <brief>` |
+| Gemini CLI, OpenCode, others | “use shortform to …” |
 
-Free. MIT. Runs on your machine. Works with the agent you already pay for.
+No flags. No timeline. No stock footage, watermark, or AI avatar. Skill builds from real UI, colours, and copy when project exists.
 
-**Status: early.** Version 0.2.0. It works end to end — the example below is a real run — but it has been exercised on a handful of projects, not hundreds. Expect rough edges, and please report them.
+Free. MIT. Runs on machine. Works with agent you already use.
+
+**Status: early.** v0.2.0. End-to-end works; tested on handful of projects. Report rough edges.
 
 ## Install
 
@@ -59,9 +74,9 @@ The skill runs `hyperframes doctor` first and tells you exactly what is missing 
 
 **One thing to know about that dependency.** `/shortform` pins the HyperFrames CLI to `0.8.46`, but the HyperFrames *skills* above install from the upstream repository's `main` branch — there is no version to pin, and nothing records which state you got. Upstream changes to those skills can therefore change how your videos come out with no change in this repository. The pin is raised here deliberately, one pull request at a time; the skills underneath move on their own.
 
-## Use it
+## Brief examples
 
-Type the command, then say what the video is for in plain words. There are no flags to learn.
+Say goal in plain words:
 
 ```
 /shortform attract B2B customers for my invoicing app
@@ -71,13 +86,7 @@ Type the command, then say what the video is for in plain words. There are no fl
 /shortform teach people how compound interest works (no project, just this)
 ```
 
-| Agent | How to invoke |
-|---|---|
-| Claude Code, Cursor | `/shortform <brief>` |
-| Codex | `$shortform <brief>` |
-| Gemini CLI, OpenCode, others | "use shortform to …" or "make a TikTok about …" |
-
-Things you can say in the brief:
+Brief can include:
 
 | You can set | Example | If you don't |
 |---|---|---|
@@ -90,9 +99,9 @@ Things you can say in the brief:
 | Music | "chill music", "use ./track.mp3", "no music" | a bundled track matched to the tone |
 | Voiceover | "with voiceover" | off; captions carry the message |
 
-Before the slow render it shows you three hook options and the storyboard, and waits for one reply. Say "just do it" in the brief to skip that.
+Before render, it shows three hook options and storyboard. Say `just do it` to skip approval.
 
-### What you get
+## Output
 
 ```
 shortform-output/
@@ -111,7 +120,7 @@ npm run dev                      # live preview in the browser
 npx hyperframes@0.8.46 render --quality delivery --fps 30 --output ../shortform.mp4
 ```
 
-Want to see the whole thing before you install it? [`examples/paidly/`](examples/paidly) is a complete run, checked in: the fictional project that went in, and the [plan](examples/paidly/shortform-output/plan.md), [video](examples/paidly/shortform-output/shortform.mp4) and [post kit](examples/paidly/shortform-output/post.md) that came out.
+See complete checked-in run: [`examples/paidly/`](examples/paidly) → [plan](examples/paidly/shortform-output/plan.md), [video](examples/paidly/shortform-output/shortform.mp4), [cover](examples/paidly/shortform-output/cover.jpg), [post kit](examples/paidly/shortform-output/post.md).
 
 ## What makes it short-form
 
