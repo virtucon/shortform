@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: What it needs to run
+    url: https://github.com/virtucon/shortform#you-also-need
+    about: Node 22+, FFmpeg with ffprobe, Chrome and the HyperFrames skills. The skill runs `hyperframes doctor` first and names whatever is missing, so start there.
+  - name: Report a security issue privately
+    url: https://github.com/virtucon/shortform/security/advisories/new
+    about: Not as a public issue. SECURITY.md says what is in scope.

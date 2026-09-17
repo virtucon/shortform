@@ -1,0 +1,25 @@
+name: A question
+description: How to install it, what a brief can say, why a step did what it did.
+labels: [question]
+body:
+  - type: textarea
+    id: question
+    attributes:
+      label: What you want to know
+    validations:
+      required: true
+  - type: input
+    id: harness
+    attributes:
+      label: Agent and model
+      description: Only if the question is about running it.
+      placeholder: Claude Code + Sonnet 5, Codex CLI + GPT-5, ...
+    validations:
+      required: false
+  - type: checkboxes
+    id: checked
+    attributes:
+      label: Before asking
+      options:
+        - label: I read the README, and `hyperframes doctor` is not already telling me the answer
+          required: false
