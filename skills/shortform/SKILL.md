@@ -2,7 +2,7 @@
 name: shortform
 description: Turn the current project, or any brief, into a vertical 9:16 short-form video built for TikTok, YouTube Shorts and Instagram Reels, using HyperFrames. Takes a free-text objective such as "attract B2B customers" or "grow followers" and shapes the hook, structure and call to action around it. Use when someone says "/shortform", "shortform", "make a TikTok", "make a Short", "make a Reel", "short-form video", or wants a vertical social video about what they built.
 license: MIT
-compatibility: Requires Node.js 22+, FFmpeg on PATH, the hyperframes CLI (npx hyperframes@0.8.46) and the hyperframes domain skills.
+compatibility: Requires Node.js 22+, FFmpeg on PATH, the hyperframes CLI (npx hyperframes@0.8.46), the hyperframes domain skills, and a model that can view images (the safe-zone gate reads snapshot frames).
 ---
 
 # /shortform

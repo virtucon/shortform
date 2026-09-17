@@ -67,6 +67,7 @@ The captions are the script from `plan.md`, one card at a time.
 - Number the steps on screen for `educate` ("1/3").
 - The CTA scene holds at least 2.5s and shows the ask and the handle, URL or repo name as text. It has no exit animation: it stays settled and readable through the very last frame, on the hook scene's background, so the loop back to frame 1 reads as one more cut.
 - Give every clip an `id`, and spread caption cards over two or three tracks rather than one; this keeps `check` free of editable-id and track-density warnings.
+- **One track plays one clip at a time.** Two clips sharing a `data-track-index` must not overlap in time — the next one starts at or after the previous one ends. Overlap on a track is not an error the tools report; it silently plays something other than your storyboard. Cards that are meant to be on screen together go on different tracks.
 - Full-bleed decoration that runs past the canvas edge (background shapes, glows) gets `data-layout-allow-overflow`, or `check` flags it on every sample.
 
 ## Voiceover (only when the brief asks)

@@ -144,7 +144,7 @@ The skill is plain Markdown: a short [`SKILL.md`](skills/shortform/SKILL.md) and
 
 **Will it overwrite my last video?** No. If `shortform-output/` exists, the next run writes `shortform-output-YYYY-MM-DD-HHmmss/`.
 
-**Which models work?** Any model your agent runs that can follow a multi-step skill and write HTML. Stronger models make better-looking videos.
+**Which models work?** A model that can follow a multi-step skill, write HTML, **and look at images**. The safe-zone gate before rendering works by viewing snapshot frames — a text-only model gets through it blind and will sooner or later put your caption under the TikTok UI. Stronger models make better-looking videos.
 
 **Is the music safe to post?** The four bundled tracks are [CC0](skills/shortform/assets/music/CREDITS.md) (public domain).
 

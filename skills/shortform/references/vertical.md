@@ -88,7 +88,7 @@ The last frame must cut into the first without a jolt:
 - [ ] Root element is `data-width="1080" data-height="1920"`.
 - [ ] Every asset the composition loads sits in `composition/assets/` — no CDN, no absolute path off the composition directory.
 - [ ] Music fades out over the last 0.8s (unless the brief said no music).
-- [ ] Every readable element sits inside the safe rectangle, checked by looking at snapshots (`check` cannot see safe zones).
+- [ ] Every readable element sits inside the safe rectangle, checked by looking at snapshots (`check` cannot see safe zones). This gate needs eyes: if you cannot view images, say so and let the user check the snapshots before you render, rather than ticking it unseen.
 - [ ] Each scene's content is vertically centred in the safe rectangle and fills at least two thirds of its height.
 - [ ] No readable text under 40px; hook at least 110px.
 - [ ] Hook text is visible on frame 1.
