@@ -1,8 +1,10 @@
 # /shortform
 
-**One line to your coding agent. One vertical video, ready to post.**
+**One line in your terminal. One vertical video, ready to post.**
 
-You shipped the thing. The launch video never happened, because editing one costs an afternoon you would rather spend building. Type one sentence in the terminal you already have open, and `/shortform` reads your actual code, writes the hook, and renders a 1080×1920 video for TikTok, YouTube Shorts and Reels — captions, music on the beat, cover frame, caption and hashtags included.
+You shipped the thing. Nobody saw it. The launch video never happened because editing one costs an afternoon you would rather spend building — so the best thing you made this month is still a link nobody clicks.
+
+Type one sentence into the terminal you already have open. `/shortform` reads your actual code, writes the hook, and renders a 1080×1920 video for TikTok, YouTube Shorts and Reels — kinetic captions, music cut to the beat, cover frame, caption and hashtags in the box. Ninety seconds of your attention, start to upload.
 
 [![validate](https://github.com/Virtucon/shortform/actions/workflows/validate.yml/badge.svg)](https://github.com/Virtucon/shortform/actions/workflows/validate.yml)
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
@@ -17,9 +19,11 @@ You shipped the thing. The launch video never happened, because editing one cost
 /shortform attract B2B customers for my invoicing app
 ```
 
-That is the whole interface. No timeline, no flags, no stock footage, no "AI avatar". `/shortform` is an open-source [agent skill](https://agentskills.io): plain Markdown your agent reads, that builds the video out of your real UI, your real colours and your real words.
+That is the whole interface. No timeline. No flags. No stock footage, no watermark, no uncanny "AI avatar" reading your README aloud. `/shortform` is an open-source [agent skill](https://agentskills.io) — plain Markdown your agent reads — and it builds the video out of your real UI, your real colours and your real words.
 
-It asks you once — three hooks and a storyboard, pick one — and then it renders.
+It asks you exactly one question: here are three hooks and a storyboard, pick one. Then it renders while you go do something else.
+
+Free. MIT. Runs on your machine. Works with the agent you already pay for.
 
 ## Install
 
@@ -43,10 +47,11 @@ Add `-g` to install for every project. The [`skills` CLI](https://github.com/ver
 ### You also need
 
 - [Node.js](https://nodejs.org) 22 or newer
-- [FFmpeg](https://ffmpeg.org/download.html) on your `PATH`
+- [FFmpeg](https://ffmpeg.org/download.html) (with `ffprobe`) on your `PATH`
+- Chrome, which renders the frames: `npx hyperframes@0.8.46 browser ensure`
 - The [HyperFrames](https://github.com/heygen-com/hyperframes) skills, which do the rendering: `npx hyperframes@0.8.46 skills update`
 
-The skill checks all of this first and tells you what is missing. It never installs anything itself.
+The skill runs `hyperframes doctor` first and tells you exactly what is missing and the command that fixes it. It never installs anything itself.
 
 ## Use it
 
@@ -92,9 +97,19 @@ shortform-output/
   composition/     the HyperFrames project, if you want to edit and re-render
 ```
 
+When it finishes it offers one re-roll — a different hook from the plan, a different length, or a different track. Or edit the composition yourself:
+
+```bash
+cd shortform-output/composition
+npm run dev                      # live preview in the browser
+npx hyperframes@0.8.46 render --quality delivery --fps 30 --output ../shortform.mp4
+```
+
+Want to see the whole thing before you install it? [`examples/paidly/`](examples/paidly) is a complete run, checked in: the fictional project that went in, and the [plan](examples/paidly/shortform-output/plan.md), [video](examples/paidly/shortform-output/shortform.mp4) and [post kit](examples/paidly/shortform-output/post.md) that came out.
+
 ## What makes it short-form
 
-A landscape launch video cropped to 9:16 does not work in a feed. `/shortform` plans for the feed from the start:
+A landscape demo cropped to 9:16 dies in a feed. The scroll is ruthless and you get one frame to survive it. `/shortform` plans for that from the first pixel:
 
 - **Objective first.** Eight playbooks (attract customers, drive signups, grow followers, educate, announce a launch, social proof, hire, build community), each with its own hook style, scene structure and call to action.
 - **The hook is on frame 1.** No logo sting, no fade in. You pick from three hooks written in three different patterns.
@@ -108,12 +123,12 @@ A landscape launch video cropped to 9:16 does not work in a feed. `/shortform` p
 ## How it works
 
 1. **Preflight**: checks Node, FFmpeg, Chrome and the HyperFrames skills.
-2. **Understand**: reads your README, landing page, styles and core flow for real copy, colours and fonts. No browser, no screenshots.
+2. **Understand**: reads your README, landing page, styles and core flow for real copy, colours and fonts — straight from the files, no browser and no screenshots of your app.
 3. **Plan**: picks the playbook, writes three hooks and a storyboard, and asks you once.
 4. **Compose**: builds a 1080×1920 [HyperFrames](https://hyperframes.heygen.com/) composition in HTML and CSS, with captions and music, and runs `hyperframes check`.
 5. **Deliver**: renders, verifies size and length, picks the cover, and writes the post kit.
 
-The skill is plain Markdown: a short [`SKILL.md`](skills/shortform/SKILL.md) and one [reference file](skills/shortform/references) per step, loaded only when needed. Read it; change it; it is meant to be forked.
+The skill is plain Markdown: a short [`SKILL.md`](skills/shortform/SKILL.md) and one [reference file](skills/shortform/references) per step, loaded only when needed. No binary, no service, no account. Read it, change it, fork it — that is the point.
 
 ## FAQ
 
@@ -122,6 +137,8 @@ The skill is plain Markdown: a short [`SKILL.md`](skills/shortform/SKILL.md) and
 **Can I use a trending sound?** Yes. Upload the video, add the sound in the app, and turn the original audio down. Or say "no music" in the brief.
 
 **Does it work without a project?** Yes. Give it a topic and it makes a typographic video from your brief alone.
+
+**Will it overwrite my last video?** No. If `shortform-output/` exists, the next run writes `shortform-output-YYYY-MM-DD-HHmmss/`.
 
 **Which models work?** Any model your agent runs that can follow a multi-step skill and write HTML. Stronger models make better-looking videos.
 
