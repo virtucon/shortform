@@ -156,9 +156,9 @@ Issues and pull requests are welcome, most of all "this video came out wrong" re
 
 - Inspired by [brag](https://github.com/latent-spaces/brag) by Shunit Haviv Hakimi, which showed how good a one-command project video can be.
 - Rendering by [HyperFrames](https://github.com/heygen-com/hyperframes).
-- The example composition animates with [GSAP](https://gsap.com) (bundled at `examples/paidly/shortform-output/composition/assets/gsap.min.js`, under GreenSock's own licence, not MIT).
+- The example composition animates with [GSAP](https://gsap.com) and sets type in [Space Grotesk](https://github.com/floriankarsten/space-grotesk), both bundled under their own licences, not MIT.
 - Music by Of Far Different Nature, omfgdude, Emma_MA and congusbongus, via [OpenGameArt](https://opengameart.org), all CC0.
 
 ## License
 
-[MIT](LICENSE)
+[MIT](LICENSE) for the skill. Bundled fonts, music and libraries keep their own licences — see [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).

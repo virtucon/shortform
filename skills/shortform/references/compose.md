@@ -24,6 +24,8 @@ Add the safe-zone CSS variables from `vertical.md` before writing any scene.
 
 HyperFrames lint wants fonts loaded from local files. If the project's font is a Google Font or ships in the project, put the `woff2` files in `assets/fonts/` with `@font-face` rules (downloading from Google Fonts is fine when the network allows). If you cannot get the file, use a system stack (`system-ui, -apple-system, "Segoe UI", sans-serif`) rather than stalling. Use the heaviest weight the family has when the type scale asks for more than it offers.
 
+Any font file you copy in brings its licence with it. Copy it into `assets/fonts/` under its upstream filename, usually `OFL.txt` — the SIL Open Font License, which nearly every Google Font uses, requires the licence to travel with the font. No licence text available means do not bundle the file: fall back to the system stack.
+
 ## Assets
 
 Copy everything the composition uses into `composition/assets/` and reference it by relative path. Never point at files outside the composition directory, and never at a CDN; renders must not depend on where this skill is installed or on the network being up. A blocked CDN does not fail the render — it produces a video with the animation silently missing.
