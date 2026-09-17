@@ -1,8 +1,8 @@
 # /shortform
 
-**One line in terminal. One vertical video, ready to post.**
+**One line in your terminal. One vertical video, ready to post.**
 
-`/shortform` reads project, writes hook, plans story, then renders a 1080×1920 video for TikTok, YouTube Shorts, and Reels. Output includes captions, music, cover frame, post copy, and hashtags.
+`/shortform` reads your project, writes the hook, plans the story, and renders a 1080×1920 video for TikTok, YouTube Shorts and Reels. You get the video plus captions, music, a cover frame, post copy and hashtags.
 
 [![validate](https://github.com/virtucon/shortform/actions/workflows/validate.yml/badge.svg)](https://github.com/virtucon/shortform/actions/workflows/validate.yml)
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
@@ -18,19 +18,19 @@
 ## Quick start — no prompt needed
 
 ```bash
-# Install for current project. Add -g for every project.
+# Installs for the current project. Add -g to install it for every project.
 npx skills add virtucon/shortform
 ```
 
-Run it in project root:
+Then run it from your project root:
 
 ```
 /shortform
 ```
 
-It reads project, then asks one question: **“What should this video achieve, and for whom?”** Answer in plain words. Then pick one of three hooks and storyboard. It renders while you do something else.
+It reads your project and asks you one question: **“What should this video achieve, and for whom?”** Answer in plain words. It comes back with three hooks and a storyboard, you pick one, and it renders while you get on with something else.
 
-Want more control? Add brief after command. Fully optional:
+If you want more control, add a brief after the command. It is entirely optional:
 
 ```
 /shortform attract B2B customers for my invoicing app
@@ -38,15 +38,15 @@ Want more control? Add brief after command. Fully optional:
 
 | I use | I type |
 |---|---|
-| Claude Code, Cursor | `/shortform` — add brief only if wanted |
-| Codex | `$shortform` — add brief only if wanted |
-| Gemini CLI, OpenCode, others | “use shortform” — add goal only if wanted |
+| Claude Code, Cursor | `/shortform` — add a brief only if you want one |
+| Codex | `$shortform` — add a brief only if you want one |
+| Gemini CLI, OpenCode, others | “use shortform” — add your goal only if you want to |
 
-No flags. No timeline. No stock footage, watermark, or AI avatar. Skill builds from real UI, colours, and copy when project exists.
+No flags, no timeline, no stock footage, no watermark and no AI avatar. When there is a project to read, the video is built from your real UI, colours and copy.
 
-Free. MIT. Runs on machine. Works with agent you already use.
+It is free, it is MIT, it runs on your machine, and it works with the agent you already use.
 
-**Status: early.** v0.2.1. End-to-end works; tested on handful of projects. Report rough edges.
+**Status: early.** v0.2.1. It works end to end, and it has been tested on a handful of projects. Please report the rough edges.
 
 ## Install
 
@@ -169,6 +169,8 @@ The skill is plain Markdown: a short [`SKILL.md`](skills/shortform/SKILL.md) and
 ## Contributing
 
 Issues and pull requests are welcome, most of all "this video came out wrong" reports with the brief and a screenshot. See [CONTRIBUTING.md](CONTRIBUTING.md).
+
+Found something exploitable rather than something ugly? See [SECURITY.md](SECURITY.md) and report it privately.
 
 ## Credits
 
