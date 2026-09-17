@@ -4,7 +4,7 @@
 
 `/shortform` reads project, writes hook, plans story, then renders a 1080×1920 video for TikTok, YouTube Shorts, and Reels. Output includes captions, music, cover frame, post copy, and hashtags.
 
-[![validate](https://github.com/Virtucon/shortform/actions/workflows/validate.yml/badge.svg)](https://github.com/Virtucon/shortform/actions/workflows/validate.yml)
+[![validate](https://github.com/virtucon/shortform/actions/workflows/validate.yml/badge.svg)](https://github.com/virtucon/shortform/actions/workflows/validate.yml)
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 [![Agent Skills](https://img.shields.io/badge/format-Agent%20Skills-8A2BE2)](https://agentskills.io)
 
@@ -19,7 +19,7 @@
 
 ```bash
 # Install for current project. Add -g for every project.
-npx skills add Virtucon/shortform
+npx skills add virtucon/shortform
 ```
 
 Run it in project root:
@@ -46,21 +46,21 @@ No flags. No timeline. No stock footage, watermark, or AI avatar. Skill builds f
 
 Free. MIT. Runs on machine. Works with agent you already use.
 
-**Status: early.** v0.2.0. End-to-end works; tested on handful of projects. Report rough edges.
+**Status: early.** v0.2.1. End-to-end works; tested on handful of projects. Report rough edges.
 
 ## Install
 
 **Claude Code**
 
 ```
-/plugin marketplace add Virtucon/shortform
+/plugin marketplace add virtucon/shortform
 /plugin install shortform@shortform
 ```
 
 **Codex, Cursor, Gemini CLI, OpenCode, Copilot and other agents**
 
 ```bash
-npx skills add Virtucon/shortform
+npx skills add virtucon/shortform
 ```
 
 Add `-g` to install for every project. The [`skills` CLI](https://github.com/vercel-labs/skills) puts it in the right folder for each agent it finds.
@@ -73,7 +73,8 @@ Add `-g` to install for every project. The [`skills` CLI](https://github.com/ver
 - [FFmpeg](https://ffmpeg.org/download.html) (with `ffprobe`) on your `PATH`
 - Chrome, which renders the frames: `npx hyperframes@0.8.46 browser ensure`
 - A few GB of free disk — frames are extracted before the MP4 is written
-- In Docker on Linux: `--shm-size=512m`, since Chrome needs more than the default 64MB `/dev/shm`
+- In Docker on Linux: `--shm-size=512m` — Chrome needs about 256MB of `/dev/shm` and the default is 64MB
+- Only if you ask for voiceover: the Kokoro TTS model, which `hyperframes doctor` reports and links; without it the run offers to build the video captions-only
 - The [HyperFrames](https://github.com/heygen-com/hyperframes) skills, which do the rendering: `npx hyperframes@0.8.46 skills update hyperframes-core hyperframes-animation hyperframes-creative hyperframes-keyframes hyperframes-cli`
 
 The skill runs `hyperframes doctor` first and tells you exactly what is missing and the command that fixes it. It never installs anything itself.
