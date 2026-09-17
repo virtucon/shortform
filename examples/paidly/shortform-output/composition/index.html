@@ -1,0 +1,823 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <title>Paidly shortform</title>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <style>
+      @font-face {
+        font-family: "Space Grotesk";
+        font-style: normal;
+        font-weight: 300 700;
+        src: url("assets/fonts/SpaceGrotesk.woff2") format("woff2");
+      }
+      :root {
+        --ink: #14213d;
+        --paper: #fffaf0;
+        --mint: #2ec4a0;
+        --coral: #ff6b5e;
+        --sun: #ffd166;
+        --radius: 28px;
+        --safe-top: 250px;
+        --safe-bottom: 480px;
+        --safe-left: 60px;
+        --safe-right: 160px;
+      }
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        margin: 0;
+        width: 1080px;
+        height: 1920px;
+        overflow: hidden;
+        background: #14213d;
+      }
+      #root {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        font-family: "Space Grotesk", system-ui, sans-serif;
+        color: var(--paper);
+        letter-spacing: -0.03em;
+      }
+      .bg {
+        position: absolute;
+        inset: 0;
+      }
+      #bg-ink {
+        background: var(--ink);
+      }
+      #bg-paper {
+        background: var(--paper);
+      }
+      .blob {
+        position: absolute;
+        display: block;
+        border-radius: 50%;
+      }
+      #blob-a {
+        width: 760px;
+        height: 760px;
+        left: -260px;
+        top: -200px;
+        background: var(--mint);
+        opacity: 0.22;
+      }
+      #blob-b {
+        width: 900px;
+        height: 900px;
+        left: 480px;
+        top: 1240px;
+        background: var(--mint);
+        opacity: 0.2;
+      }
+      #blob-c {
+        width: 300px;
+        height: 300px;
+        left: 820px;
+        top: 520px;
+        background: var(--coral);
+        opacity: 0.2;
+      }
+      .clip {
+        position: absolute;
+        inset: 0;
+      }
+      .safe {
+        position: absolute;
+        top: var(--safe-top);
+        bottom: var(--safe-bottom);
+        left: var(--safe-left);
+        right: var(--safe-right);
+      }
+      .scene-inner {
+        position: absolute;
+        inset: 0;
+      }
+
+      /* ---------- captions ---------- */
+      .cap-band {
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 177px;
+        height: 220px;
+        display: flex;
+        align-items: flex-start;
+      }
+      .cap-text {
+        display: block;
+        width: 100%;
+        padding-left: 16px;
+        font-size: 100px;
+        font-weight: 700;
+        line-height: 1.06;
+        letter-spacing: -0.04em;
+      }
+      .cap-text span {
+        display: block;
+      }
+      .on-paper {
+        color: var(--ink);
+      }
+      .em-coral {
+        color: var(--coral);
+      }
+      .em-sun {
+        color: var(--sun);
+      }
+      .hl {
+        display: inline-block;
+        background: var(--sun);
+        padding: 0 16px 6px;
+        border-radius: 14px;
+      }
+      .hl.ls {
+        margin-left: -16px;
+      }
+      .hl-mint {
+        background: var(--mint);
+      }
+      .label-pill {
+        position: absolute;
+        left: 0;
+        top: 41px;
+        display: inline-block;
+        font-size: 52px;
+        font-weight: 700;
+        line-height: 1;
+        padding: 22px 34px 26px;
+        border-radius: 999px;
+        background: var(--ink);
+        color: var(--sun);
+      }
+
+      /* ---------- brand mark ---------- */
+      .mark {
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        font-size: 56px;
+        font-weight: 700;
+        line-height: 1;
+        letter-spacing: -0.04em;
+      }
+      .mark-pill {
+        left: auto;
+        right: 0;
+        bottom: auto;
+        top: 41px;
+        background: var(--ink);
+        color: var(--paper);
+        padding: 16px 30px 22px;
+        border-radius: 999px;
+      }
+      .mark i,
+      .wordmark i {
+        font-style: normal;
+        color: var(--mint);
+      }
+
+      /* ---------- cards ---------- */
+      .card {
+        position: absolute;
+        left: 0;
+        top: 433px;
+        width: 842px;
+        height: 700px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        background: #fffefb;
+        color: var(--ink);
+        border: 4px solid var(--ink);
+        border-radius: var(--radius);
+        padding: 36px 40px 40px;
+        box-shadow: 16px 16px 0 var(--ink);
+      }
+      #s2-card {
+        left: 30px;
+        top: 430px;
+        width: 780px;
+        height: 470px;
+      }
+      #s2-mark {
+        bottom: auto;
+        top: 968px;
+        left: 16px;
+        font-size: 64px;
+      }
+      .card.on-ink {
+        box-shadow: 16px 16px 0 var(--coral);
+      }
+      .row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 20px;
+      }
+      #s2-card .inv-no {
+        font-size: 52px;
+      }
+      .inv-no {
+        white-space: nowrap;
+        font-size: 58px;
+        font-weight: 700;
+      }
+      .pill-late {
+        display: inline-block;
+        background: var(--ink);
+        color: var(--coral);
+        font-size: 42px;
+        font-weight: 700;
+        line-height: 1;
+        padding: 16px 26px 20px;
+        border-radius: 999px;
+        white-space: nowrap;
+      }
+      .job {
+        font-size: 46px;
+        font-weight: 500;
+        margin-top: 30px;
+      }
+      .amount {
+        font-size: 132px;
+        font-weight: 700;
+        line-height: 1;
+        letter-spacing: -0.05em;
+        margin-top: 36px;
+      }
+
+      /* ---------- hook ---------- */
+      #hook-text {
+        position: absolute;
+        left: 0;
+        top: 92px;
+        width: 800px;
+        font-size: 140px;
+        font-weight: 700;
+        line-height: 1.04;
+        letter-spacing: -0.05em;
+        color: var(--paper);
+      }
+      #hook-text span {
+        display: block;
+      }
+      #hook-text .q {
+        color: var(--coral);
+      }
+      .mail {
+        position: absolute;
+        left: 0;
+        width: 850px;
+        height: 150px;
+        display: flex;
+        align-items: center;
+        gap: 26px;
+        padding: 0 34px;
+        background: #22335c;
+        border: 3px solid #3a4e80;
+        border-radius: 24px;
+        font-size: 48px;
+        font-weight: 600;
+        color: var(--paper);
+        white-space: nowrap;
+      }
+      .mail b {
+        display: block;
+        flex: none;
+        width: 26px;
+        height: 26px;
+        border-radius: 50%;
+        background: var(--coral);
+      }
+      #mail-1 {
+        top: 600px;
+      }
+      #mail-2 {
+        top: 774px;
+      }
+      #mail-3 {
+        top: 948px;
+      }
+
+      /* ---------- reveal ---------- */
+      .eyebrow {
+        position: absolute;
+        left: 0;
+        top: 138px;
+        display: inline-block;
+        background: var(--ink);
+        color: var(--mint);
+        font-size: 40px;
+        font-weight: 700;
+        line-height: 1;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+        padding: 20px 28px 22px;
+        border-radius: 999px;
+        white-space: nowrap;
+      }
+      .wordmark {
+        position: absolute;
+        left: 0;
+        top: 260px;
+        font-size: 280px;
+        font-weight: 700;
+        line-height: 1;
+        letter-spacing: -0.06em;
+        color: var(--ink);
+      }
+      #headline {
+        position: absolute;
+        left: 0;
+        top: 590px;
+        width: 860px;
+        padding-left: 16px;
+        font-size: 140px;
+        font-weight: 700;
+        line-height: 1.1;
+        letter-spacing: -0.05em;
+        color: var(--ink);
+      }
+      #headline span {
+        display: block;
+      }
+      #headline .hl {
+        display: inline-block;
+      }
+
+      /* ---------- form ---------- */
+      .f-label {
+        font-size: 44px;
+        font-weight: 600;
+        opacity: 0.75;
+      }
+      .f-field {
+        height: 130px;
+        display: flex;
+        align-items: center;
+        padding: 0 30px;
+        margin: 10px 0 26px;
+        border: 4px solid var(--ink);
+        border-radius: 20px;
+        background: var(--paper);
+        font-size: 66px;
+        font-weight: 700;
+      }
+      .f-btn {
+        position: relative;
+        flex: none;
+        height: 150px;
+        border-radius: 999px;
+        background: var(--ink);
+        color: var(--paper);
+        font-size: 60px;
+        font-weight: 700;
+        margin-top: 12px;
+      }
+      .f-btn span {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 999px;
+      }
+      #btn-sent {
+        background: var(--mint);
+        color: var(--ink);
+      }
+
+      /* ---------- timeline ticks ---------- */
+      .ticks {
+        display: grid;
+        gap: 22px;
+        margin-top: 34px;
+      }
+      .tick {
+        position: relative;
+        height: 138px;
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        padding: 0 20px;
+        border-radius: 20px;
+        background: var(--paper);
+        border: 3px solid #e6dcc4;
+        font-size: 44px;
+        font-weight: 600;
+        white-space: nowrap;
+      }
+      .tick .chk {
+        display: flex;
+        flex: none;
+        width: 56px;
+        height: 56px;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        background: var(--ink);
+        color: var(--mint);
+        font-size: 36px;
+        font-weight: 700;
+      }
+      .tick .day {
+        display: block;
+        margin-left: auto;
+        background: var(--sun);
+        color: var(--ink);
+        font-size: 40px;
+        font-weight: 700;
+        line-height: 1;
+        padding: 14px 22px 18px;
+        border-radius: 999px;
+      }
+      .tick-paid-fill {
+        position: absolute;
+        inset: -3px;
+        display: block;
+        border-radius: 20px;
+        background: var(--mint);
+      }
+      .tick-paid-label {
+        position: relative;
+        display: flex;
+        align-items: center;
+        gap: 22px;
+      }
+      #t-paid {
+        height: 120px;
+      }
+      .pay-btn {
+        flex: none;
+        height: 124px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 999px;
+        font-size: 54px;
+        font-weight: 700;
+        margin-top: 22px;
+      }
+      #pay-card {
+        background: var(--ink);
+        color: var(--paper);
+      }
+      #pay-bank {
+        border: 4px solid var(--ink);
+        color: var(--ink);
+      }
+      .amount-sm {
+        font-size: 100px;
+        font-weight: 700;
+        line-height: 1;
+        letter-spacing: -0.05em;
+        margin-top: 6px;
+      }
+
+      /* ---------- CTA ---------- */
+      #cta-mark {
+        position: absolute;
+        left: 0;
+        top: 175px;
+        font-size: 120px;
+        font-weight: 700;
+        line-height: 1;
+        letter-spacing: -0.06em;
+        color: var(--paper);
+      }
+      #cta-head {
+        position: absolute;
+        left: 0;
+        top: 345px;
+        width: 860px;
+        font-size: 128px;
+        font-weight: 700;
+        line-height: 1.02;
+        letter-spacing: -0.05em;
+      }
+      #cta-head span {
+        display: block;
+      }
+      #cta-pill {
+        position: absolute;
+        left: 0;
+        top: 666px;
+        display: inline-block;
+        background: var(--mint);
+        color: var(--ink);
+        font-size: 76px;
+        font-weight: 700;
+        line-height: 1;
+        padding: 34px 54px 40px;
+        border-radius: 999px;
+        white-space: nowrap;
+      }
+      #cta-url {
+        position: absolute;
+        left: 0;
+        top: 866px;
+        font-size: 66px;
+        font-weight: 700;
+        line-height: 1;
+        white-space: nowrap;
+      }
+      #cta-free {
+        position: absolute;
+        left: 0;
+        top: 962px;
+        font-size: 44px;
+        font-weight: 500;
+        line-height: 1.2;
+        letter-spacing: -0.02em;
+        white-space: nowrap;
+        color: #d9dff0;
+      }
+    </style>
+  </head>
+  <body>
+    <div
+      id="root"
+      data-composition-id="shortform"
+      data-start="0"
+      data-duration="25"
+      data-width="1080"
+      data-height="1920"
+    >
+      <!-- full-bleed background, always on -->
+      <div id="bg-ink" class="bg"></div>
+      <div id="bg-paper" class="bg"></div>
+      <div id="blob-a" class="blob" data-layout-allow-overflow></div>
+      <div id="blob-b" class="blob" data-layout-allow-overflow></div>
+      <div id="blob-c" class="blob" data-layout-allow-overflow></div>
+
+      <!-- 1 HOOK -->
+      <section id="s1" class="clip" data-start="0" data-duration="2.5" data-track-index="1">
+        <div class="safe">
+          <div id="s1-in" class="scene-inner">
+            <div id="hook-text">
+              <span>Freelancers:</span>
+              <span>stop <span class="q" style="display: inline">chasing</span></span>
+              <span>invoices.</span>
+            </div>
+            <div id="mail-1" class="mail"><b></b>Just following up…</div>
+            <div id="mail-2" class="mail"><b></b>Re: just following up…</div>
+            <div id="mail-3" class="mail"><b></b>Re: Re: just following up…</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 2 AGITATE -->
+      <section id="s2" class="clip" data-start="2.5" data-duration="3.29" data-track-index="2">
+        <div class="safe">
+          <div id="s2-in" class="scene-inner">
+            <div id="s2-card" class="card on-ink">
+              <div class="row">
+                <div class="inv-no">Invoice #0042</div>
+                <div id="s2-pill" class="pill-late">14 days late</div>
+              </div>
+              <div class="job">Brand refresh — Acme Bakery</div>
+              <div class="amount">$2,400.00</div>
+            </div>
+            <div id="s2-mark" class="mark">paidly<i>.</i></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 3 REVEAL -->
+      <section id="s3" class="clip" data-start="5.79" data-duration="3.21" data-track-index="3">
+        <div class="safe">
+          <div id="s3-in" class="scene-inner">
+            <div id="s3-eyebrow" class="eyebrow">For freelancers and tiny studios</div>
+            <div id="s3-word" class="wordmark">paidly<i style="color: #1d9a7d">.</i></div>
+            <div id="headline">
+              <span class="hl-line">Invoices</span>
+              <span class="hl-line">that chase</span>
+              <span class="hl-line"><span class="hl ls hl-mint">themselves.</span></span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 4 PROOF 1 -->
+      <section id="s4" class="clip" data-start="9" data-duration="4" data-track-index="1">
+        <div class="safe">
+          <div id="s4-in" class="scene-inner">
+            <div class="label-pill">30-second invoices</div>
+            <div id="s4-card" class="card">
+              <div class="f-label">Client</div>
+              <div class="f-field"><div id="f-client">Acme Bakery</div></div>
+              <div class="f-label">Amount</div>
+              <div class="f-field"><div id="f-amount">$2,400.00</div></div>
+              <div id="f-btn" class="f-btn">
+                <span id="btn-send">Send</span>
+                <span id="btn-sent">Sent ✓</span>
+              </div>
+            </div>
+            <div class="mark mark-pill">paidly<i>.</i></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 5 PROOF 2 -->
+      <section id="s5" class="clip" data-start="13" data-duration="4" data-track-index="2">
+        <div class="safe">
+          <div id="s5-in" class="scene-inner">
+            <div class="label-pill">Auto-reminders</div>
+            <div id="s5-card" class="card">
+              <div class="row">
+                <div class="inv-no">Invoice #0042</div>
+                <div class="pill-late">14 days late</div>
+              </div>
+              <div class="ticks">
+                <div id="t-sent" class="tick"><div class="chk">✓</div>Sent</div>
+                <div id="t-r1" class="tick">
+                  <div class="chk">✓</div>
+                  Reminder 1 — friendly
+                  <div id="d1" class="day">day 1</div>
+                </div>
+                <div id="t-r2" class="tick">
+                  <div class="chk">✓</div>
+                  Reminder 2 — firm
+                  <div id="d7" class="day">day 7</div>
+                </div>
+              </div>
+            </div>
+            <div class="mark mark-pill">paidly<i>.</i></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 6 PROOF 3 -->
+      <section id="s6" class="clip" data-start="17" data-duration="4" data-track-index="3">
+        <div class="safe">
+          <div id="s6-in" class="scene-inner">
+            <div class="label-pill">One-tap pay</div>
+            <div id="s6-card" class="card">
+              <div class="inv-no">Invoice #0042</div>
+              <div class="amount-sm">$2,400.00</div>
+              <div id="pay-card" class="pay-btn">Pay by card</div>
+              <div id="pay-bank" class="pay-btn">Pay by bank transfer</div>
+              <div class="ticks">
+                <div id="t-paid" class="tick">
+                  <div id="paid-fill" class="tick-paid-fill"></div>
+                  <div class="tick-paid-label"><div class="chk">$</div>Paid</div>
+                </div>
+              </div>
+            </div>
+            <div class="mark mark-pill">paidly<i>.</i></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 7 CTA -->
+      <section id="s7" class="clip" data-start="21" data-duration="4" data-track-index="1">
+        <div class="safe">
+          <div id="s7-in" class="scene-inner">
+            <div id="cta-mark" class="wordmark-sm">paidly<i style="font-style: normal; color: #2ec4a0">.</i></div>
+            <div id="cta-head">
+              <span class="cta-line">Send your first</span>
+              <span class="cta-line">invoice <span class="em-sun" style="display: inline">free</span></span>
+            </div>
+            <div id="cta-pill">Link in bio</div>
+            <div id="cta-url">paidly.example</div>
+            <div id="cta-free">Free for your first 5 invoices a month</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- CAPTIONS (track above the visuals) -->
+      <div id="cap-1" class="clip cap" data-start="2.5" data-duration="1.8" data-track-index="6">
+        <div class="safe"><div class="cap-band" style="top: 158px"><div class="cap-text"><span>$2,400.</span><span class="em-coral">14 days late.</span></div></div></div>
+      </div>
+      <div id="cap-2" class="clip cap" data-start="4.3" data-duration="1.49" data-track-index="7">
+        <div class="safe"><div class="cap-band" style="top: 158px"><div class="cap-text"><span>And you’re the</span><span>one <span class="em-coral" style="display: inline">chasing.</span></span></div></div></div>
+      </div>
+
+      <div id="cap-3" class="clip cap" data-start="9" data-duration="1.37" data-track-index="5">
+        <div class="safe"><div class="cap-band"><div class="cap-text on-paper"><span>Pick a <span class="hl" style="display: inline-block">client.</span></span></div></div></div>
+      </div>
+      <div id="cap-4" class="clip cap" data-start="10.37" data-duration="1.13" data-track-index="6">
+        <div class="safe"><div class="cap-band"><div class="cap-text on-paper"><span>Type an <span class="hl" style="display: inline-block">amount.</span></span></div></div></div>
+      </div>
+      <div id="cap-5" class="clip cap" data-start="11.5" data-duration="1.5" data-track-index="7">
+        <div class="safe"><div class="cap-band"><div class="cap-text on-paper"><span>Hit <span class="hl hl-mint" style="display: inline-block">send.</span></span></div></div></div>
+      </div>
+
+      <div id="cap-6" class="clip cap" data-start="13" data-duration="2" data-track-index="5">
+        <div class="safe"><div class="cap-band"><div class="cap-text on-paper"><span><span class="hl ls" style="display: inline-block">Friendly</span></span><span>on day 1.</span></div></div></div>
+      </div>
+      <div id="cap-7" class="clip cap" data-start="15" data-duration="2" data-track-index="6">
+        <div class="safe"><div class="cap-band"><div class="cap-text on-paper"><span><span class="hl ls" style="display: inline-block">Firm</span></span><span>on day 7.</span></div></div></div>
+      </div>
+
+      <div id="cap-8" class="clip cap" data-start="17" data-duration="2" data-track-index="7">
+        <div class="safe"><div class="cap-band"><div class="cap-text on-paper"><span>Card or bank</span><span>transfer.</span></div></div></div>
+      </div>
+      <div id="cap-9" class="clip cap" data-start="19" data-duration="2" data-track-index="5">
+        <div class="safe"><div class="cap-band"><div class="cap-text on-paper"><span><span class="hl ls hl-mint" style="display: inline-block">No login.</span></span></div></div></div>
+      </div>
+
+      <audio
+        id="music"
+        data-timeline-role="music"
+        src="assets/upbeat.mp3"
+        data-start="0"
+        data-duration="25"
+        data-track-index="10"
+        data-volume="0.4"
+      ></audio>
+    </div>
+
+    <script>
+      const tl = gsap.timeline({ paused: true });
+      const T = { s2: 2.5, c2b: 4.3, s3: 5.79, s4: 9, c4b: 10.37, c4c: 11.5, s5: 13, c5b: 15, s6: 17, c6b: 19, s7: 21, end: 25 };
+
+      /* ambient: even yoyo cycles so t=25 matches t=0 for the loop */
+      tl.fromTo("#blob-a", { x: 0, y: 0, scale: 1 }, { x: 140, y: 120, scale: 1.12, duration: 6.25, repeat: 3, yoyo: true, ease: "sine.inOut" }, 0);
+      tl.fromTo("#blob-b", { x: 0, y: 0, scale: 1 }, { x: -160, y: -140, scale: 0.9, duration: 6.25, repeat: 3, yoyo: true, ease: "sine.inOut" }, 0);
+      tl.fromTo("#blob-c", { x: 0, y: 0 }, { x: -60, y: 180, duration: 3.125, repeat: 7, yoyo: true, ease: "sine.inOut" }, 0);
+
+      /* background panels: paper pushes up at the reveal, pushes up and away at the CTA */
+      tl.fromTo("#bg-paper", { y: 1920 }, { y: 0, duration: 0.35, ease: "power3.inOut" }, T.s3 - 0.3);
+      tl.to("#bg-paper", { y: -1920, duration: 0.35, ease: "power3.inOut", immediateRender: false }, T.s7 - 0.3);
+
+      tl.to("#blob-b", { backgroundColor: "#ffd166", duration: 0.35, ease: "none" }, T.s3 - 0.3);
+      tl.to("#blob-b", { backgroundColor: "#2ec4a0", duration: 0.35, ease: "none" }, T.s7 - 0.3);
+
+      /* 1 HOOK: on screen and mid-slam at frame 1 */
+      tl.fromTo("#hook-text", { scale: 1.05, transformOrigin: "0% 50%" }, { scale: 1, duration: 0.35, ease: "power4.out" }, 0);
+      tl.fromTo("#mail-1", { y: 70 }, { y: 0, duration: 0.35, ease: "back.out(1.6)" }, 0);
+      tl.fromTo("#mail-2", { y: 120, opacity: 0 }, { y: 0, opacity: 1, duration: 0.3, ease: "back.out(1.6)" }, 0.4);
+      tl.fromTo("#mail-3", { y: 120, opacity: 0 }, { y: 0, opacity: 1, duration: 0.3, ease: "back.out(1.6)" }, 0.8);
+      tl.to("#hook-text .q", { color: "#ffd166", duration: 0.2, ease: "power1.out" }, 1.4);
+      tl.to("#s1-in", { y: -260, opacity: 0, duration: 0.25, ease: "power2.in" }, T.s2 - 0.25);
+
+      /* 2 AGITATE */
+      tl.fromTo("#s2-card", { y: 420, opacity: 0, rotation: 3 }, { y: 0, opacity: 1, rotation: -1.5, duration: 0.4, ease: "power3.out" }, T.s2);
+      tl.fromTo("#s2-pill", { scale: 1 }, { scale: 1.12, duration: 0.3, repeat: 5, yoyo: true, ease: "sine.inOut" }, T.s2 + 0.6);
+      tl.to("#s2-card", { rotation: 1.5, scale: 1.03, duration: 0.35, ease: "power2.out" }, T.c2b);
+      tl.to("#s2-in", { y: -300, opacity: 0, duration: 0.28, ease: "power2.in" }, T.s3 - 0.3);
+
+      /* 3 REVEAL */
+      tl.fromTo("#s3-word", { y: 260, scale: 0.8, opacity: 0, transformOrigin: "0% 100%" }, { y: 0, scale: 1, opacity: 1, duration: 0.45, ease: "back.out(1.4)" }, T.s3 + 0.02);
+      tl.fromTo("#s3-eyebrow", { x: -80, opacity: 0 }, { x: 0, opacity: 1, duration: 0.3, ease: "power2.out" }, T.s3 + 0.35);
+      tl.fromTo(".hl-line", { y: 90, opacity: 0 }, { y: 0, opacity: 1, duration: 0.32, stagger: 0.16, ease: "power3.out" }, T.s3 + 0.55);
+      tl.to("#s3-in", { y: -260, opacity: 0, duration: 0.25, ease: "power2.in" }, T.s4 - 0.25);
+
+      /* shared entrance for the three proof scenes */
+      [["#s4", T.s4], ["#s5", T.s5], ["#s6", T.s6]].forEach(([s, t]) => {
+        tl.fromTo(s + " .label-pill", { x: -120, opacity: 0 }, { x: 0, opacity: 1, duration: 0.3, ease: "power3.out" }, t);
+        tl.fromTo(s + "-card", { y: 380, opacity: 0 }, { y: 0, opacity: 1, duration: 0.4, ease: "power3.out" }, t + 0.05);
+      });
+
+      /* 4 PROOF 1: form fills in with the captions */
+      tl.fromTo("#f-client", { opacity: 0, x: -30 }, { opacity: 1, x: 0, duration: 0.25, ease: "power2.out" }, T.s4 + 0.45);
+      tl.fromTo("#f-amount", { opacity: 0, x: -30 }, { opacity: 1, x: 0, duration: 0.25, ease: "power2.out" }, T.c4b + 0.15);
+      tl.fromTo("#btn-sent", { opacity: 0 }, { opacity: 1, duration: 0.15, ease: "none" }, T.c4c + 0.3);
+      tl.to("#btn-send", { opacity: 0, duration: 0.1, ease: "none" }, T.c4c + 0.3);
+      tl.fromTo("#f-btn", { scale: 1 }, { keyframes: [{ scale: 0.93, duration: 0.12, ease: "power2.in" }, { scale: 1.04, duration: 0.18, ease: "power2.out" }, { scale: 1, duration: 0.15, ease: "power1.inOut" }] }, T.c4c + 0.2);
+      tl.to("#s4-in", { y: -260, opacity: 0, duration: 0.25, ease: "power2.in" }, T.s5 - 0.25);
+
+      /* 5 PROOF 2: ticks check in */
+      tl.fromTo("#t-sent", { x: 80, opacity: 0 }, { x: 0, opacity: 1, duration: 0.3, ease: "power3.out" }, T.s5 + 0.4);
+      tl.fromTo("#t-r1", { x: 80, opacity: 0 }, { x: 0, opacity: 1, duration: 0.3, ease: "power3.out" }, T.s5 + 0.8);
+      tl.fromTo("#d1", { scale: 0 }, { scale: 1, duration: 0.3, ease: "back.out(2.2)" }, T.s5 + 1.05);
+      tl.fromTo("#t-r2", { x: 80, opacity: 0 }, { x: 0, opacity: 1, duration: 0.3, ease: "power3.out" }, T.c5b + 0.1);
+      tl.fromTo("#d7", { scale: 0 }, { scale: 1, duration: 0.3, ease: "back.out(2.2)" }, T.c5b + 0.35);
+      tl.to("#s5-in", { y: -260, opacity: 0, duration: 0.25, ease: "power2.in" }, T.s6 - 0.25);
+
+      /* 6 PROOF 3: tap pay, paid turns mint */
+      tl.fromTo("#pay-card", { scale: 1 }, { keyframes: [{ scale: 0.93, duration: 0.12, ease: "power2.in" }, { scale: 1.03, duration: 0.18, ease: "power2.out" }, { scale: 1, duration: 0.15, ease: "power1.inOut" }] }, T.s6 + 1.3);
+      tl.fromTo("#paid-fill", { scaleX: 0, transformOrigin: "0% 50%" }, { scaleX: 1, duration: 0.4, ease: "power3.out" }, T.c6b + 0.05);
+      tl.fromTo("#t-paid", { scale: 1 }, { keyframes: [{ scale: 1.06, duration: 0.2, ease: "power2.out" }, { scale: 1, duration: 0.25, ease: "power1.inOut" }] }, T.c6b + 0.05);
+      tl.to("#s6-in", { y: -300, opacity: 0, duration: 0.28, ease: "power2.in" }, T.s7 - 0.3);
+
+      /* 7 CTA: pushes up in, then stays settled through the last frame (no exit) */
+      tl.fromTo("#cta-mark", { y: 200, opacity: 0 }, { y: 0, opacity: 1, duration: 0.35, ease: "power3.out" }, T.s7);
+      tl.fromTo(".cta-line", { y: 200, opacity: 0 }, { y: 0, opacity: 1, duration: 0.35, stagger: 0.1, ease: "power3.out" }, T.s7 + 0.05);
+      tl.fromTo("#cta-pill", { scale: 0, transformOrigin: "0% 50%" }, { scale: 1, duration: 0.4, ease: "back.out(1.8)" }, T.s7 + 0.55);
+      tl.fromTo("#cta-url", { x: -60, opacity: 0 }, { x: 0, opacity: 1, duration: 0.3, ease: "power2.out" }, T.s7 + 0.85);
+      tl.fromTo("#cta-free", { x: -60, opacity: 0 }, { x: 0, opacity: 1, duration: 0.3, ease: "power2.out" }, T.s7 + 1.0);
+      tl.fromTo("#cta-pill", { scale: 1 }, { scale: 1.06, duration: 0.4, repeat: 3, yoyo: true, ease: "sine.inOut", immediateRender: false }, T.s7 + 1.6);
+
+      /* captions: whole card settles within 0.3s, then holds */
+      document.querySelectorAll(".cap").forEach((cap) => {
+        const t = parseFloat(cap.dataset.start);
+        const d = parseFloat(cap.dataset.duration);
+        const inner = cap.querySelector(".cap-text");
+        tl.fromTo(inner, { y: 70, opacity: 0 }, { y: 0, opacity: 1, duration: 0.28, ease: "power3.out" }, t);
+        tl.to(inner, { y: -50, opacity: 0, duration: 0.15, ease: "power2.in" }, t + d - 0.15);
+      });
+
+      window.__timelines["shortform"] = tl;
+    </script>
+  </body>
+</html>

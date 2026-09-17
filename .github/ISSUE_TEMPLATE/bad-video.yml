@@ -1,0 +1,36 @@
+name: The video came out wrong
+description: Text under the platform UI, weak hook, failed render, wrong length, anything.
+labels: [bug]
+body:
+  - type: input
+    id: brief
+    attributes:
+      label: What you typed
+      placeholder: /shortform attract customers for my app, TikTok, 20 seconds
+    validations:
+      required: true
+  - type: input
+    id: harness
+    attributes:
+      label: Agent and model
+      placeholder: Claude Code + Sonnet 5, Codex CLI + GPT-5, ...
+    validations:
+      required: true
+  - type: textarea
+    id: wrong
+    attributes:
+      label: What went wrong
+      description: Which step, and what you saw. A screenshot of the bad frame helps most.
+    validations:
+      required: true
+  - type: textarea
+    id: plan
+    attributes:
+      label: plan.md
+      description: Paste the plan.md from your shortform-output folder, if one was written.
+      render: markdown
+  - type: input
+    id: versions
+    attributes:
+      label: Versions
+      description: Output of `node --version` and `npx hyperframes --version`

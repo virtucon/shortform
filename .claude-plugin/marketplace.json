@@ -1,0 +1,15 @@
+{
+  "name": "shortform",
+  "description": "Turn your project or any brief into a vertical short-form video for TikTok, YouTube Shorts and Reels.",
+  "owner": {
+    "name": "Conor Mather",
+    "url": "https://github.com/Virtucon"
+  },
+  "plugins": [
+    {
+      "name": "shortform",
+      "source": "./",
+      "description": "Turn the current project or any brief into a vertical 9:16 short-form video shaped around your objective, using HyperFrames."
+    }
+  ]
+}

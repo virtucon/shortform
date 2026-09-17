@@ -1,0 +1,5 @@
+# Symlinks — never subject to text/EOL normalization
+.agents/skills/shortform -text
+.claude/skills/shortform -text
+*.mp3 binary
+*.mp4 binary

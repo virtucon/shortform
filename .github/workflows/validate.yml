@@ -1,0 +1,48 @@
+name: validate
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v6
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Validate SKILL.md against the Agent Skills spec
+        # pinned: skills-ref has no releases
+        run: uvx --from "git+https://github.com/agentskills/agentskills@69ef37e9424c0a7ea9dd2293b559e43ec8176379#subdirectory=skills-ref" skills-ref validate ./skills/shortform
+
+      - name: Plugin manifests are valid JSON with matching names
+        run: |
+          test "$(jq -r .name .claude-plugin/plugin.json)" = "shortform"
+          test "$(jq -r '.plugins[0].name' .claude-plugin/marketplace.json)" = "shortform"
+
+      - name: Harness symlinks resolve
+        run: |
+          test -f .claude/skills/shortform/SKILL.md
+          test -f .agents/skills/shortform/SKILL.md
+
+      - name: Relative links in the skill resolve
+        run: |
+          cd skills/shortform
+          fail=0
+          for f in SKILL.md references/*.md; do
+            dir=$(dirname "$f")
+            for link in $(grep -o '](\([^)#]*\))' "$f" | sed 's/^](//; s/)$//' | grep -v '^https\?:' || true); do
+              [ -e "$dir/$link" ] || { echo "$f: broken link $link"; fail=1; }
+            done
+          done
+          exit $fail
+
+      - name: skills CLI discovers the skill
+        run: npx -y skills add . --list | grep -q shortform

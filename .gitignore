@@ -1,0 +1,6 @@
+.DS_Store
+node_modules/
+shortform-output*/
+!examples/**/shortform-output/
+examples/**/shortform-output/composition/node_modules/
+examples/**/shortform-output/composition/renders/

@@ -1,0 +1,41 @@
+:root {
+  --ink: #14213d;
+  --paper: #fffaf0;
+  --mint: #2ec4a0;
+  --coral: #ff6b5e;
+  --sun: #ffd166;
+  --radius: 20px;
+  --font: "Space Grotesk", system-ui, sans-serif;
+}
+
+* { box-sizing: border-box; margin: 0; }
+body { font-family: var(--font); background: var(--paper); color: var(--ink); line-height: 1.5; }
+
+.nav { display: flex; justify-content: space-between; align-items: center; padding: 24px 40px; }
+.logo { font-weight: 800; font-size: 28px; letter-spacing: -0.04em; }
+.dot { color: var(--mint); }
+
+.btn { display: inline-block; background: var(--ink); color: var(--paper); padding: 16px 28px; border-radius: 999px; font-weight: 700; text-decoration: none; }
+.btn-small { padding: 10px 20px; }
+
+.hero { max-width: 760px; margin: 64px auto 40px; padding: 0 24px; text-align: center; }
+.eyebrow { font-weight: 700; color: var(--mint); text-transform: uppercase; letter-spacing: 0.08em; font-size: 14px; }
+h1 { font-size: clamp(44px, 7vw, 84px); line-height: 1; letter-spacing: -0.04em; margin: 12px 0 20px; }
+.sub { font-size: 20px; margin-bottom: 28px; }
+
+.invoice-card { max-width: 520px; margin: 0 auto 64px; background: #fff; border: 2px solid var(--ink); border-radius: var(--radius); padding: 24px; box-shadow: 8px 8px 0 var(--ink); }
+.row { display: flex; justify-content: space-between; padding: 8px 0; }
+.row.head { font-weight: 700; }
+.pill { padding: 4px 12px; border-radius: 999px; font-size: 13px; font-weight: 700; }
+.pill-late { background: var(--coral); color: #fff; }
+.timeline { display: grid; gap: 8px; margin-top: 16px; }
+.tick { padding: 10px 14px; border-radius: 12px; background: var(--paper); font-weight: 600; }
+.tick.done::before { content: "✓ "; color: var(--mint); }
+.tick.paid { background: var(--mint); color: var(--ink); }
+.tick.paid::before { content: "$ "; }
+
+.features { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; max-width: 960px; margin: 0 auto 64px; padding: 0 24px; }
+.features article { background: var(--sun); border-radius: var(--radius); padding: 24px; }
+.features h2 { font-size: 22px; letter-spacing: -0.02em; margin-bottom: 8px; }
+
+footer { text-align: center; padding: 32px; font-size: 14px; }
