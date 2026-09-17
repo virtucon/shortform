@@ -1,8 +1,8 @@
 # Step 4: Render and deliver
 
-## Render
+**Every command on this page runs from `<out>/composition/`.** The `../` in the paths below resolves to `<out>`, which is where the deliverables belong. If you have moved, `cd` back before running any of them — from `<out>` the same commands write `cover.jpg` and read `shortform.mp4` one level too high, and `ffprobe` fails on a file that is not there.
 
-From `<out>/composition/`:
+## Render
 
 ```bash
 npx hyperframes@0.8.46 render --quality delivery --fps 30 --output ../shortform.mp4
@@ -18,7 +18,13 @@ ffprobe -v error -select_streams v:0 \
   -of default=noprint_wrappers=1 ../shortform.mp4
 ```
 
-Must report `width=1080`, `height=1920`, and a duration within 1s of the plan and at most 60s. If not, fix the composition and render again. All three platforms accept H.264 MP4 at this size as is; do not re-encode.
+Must report `width=1080`, `height=1920`, and a duration within 1s of the plan and at most 60s. If not, fix the composition and render again — at most twice. If the third render is still wrong, stop and tell the user what `ffprobe` reported and what you changed between attempts. All three platforms accept H.264 MP4 at this size as is; do not re-encode.
+
+## Truth check (gate)
+
+Law 9 is checkable, so check it. Before writing `post.md`, list every claim on screen — each number, percentage, price, date, name, quote and comparative ("3× faster", "used by 200 teams", "$9/mo"). For each one, `plan.md` must already record the exact string and the file it came from (`README.md:12`, the brief, `pricing.tsx:40`). Anything you cannot point at gets cut from the video and the composition re-rendered, not softened into a vaguer version of itself.
+
+Claims with no source are the one failure that damages the user publicly, on their own account, after you are gone.
 
 ## Cover frame
 

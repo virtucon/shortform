@@ -21,9 +21,11 @@ Type one sentence into the terminal you already have open. `/shortform` reads yo
 
 That is the whole interface. No timeline. No flags. No stock footage, no watermark, no uncanny "AI avatar" reading your README aloud. `/shortform` is an open-source [agent skill](https://agentskills.io) — plain Markdown your agent reads — and it builds the video out of your real UI, your real colours and your real words.
 
-It asks you exactly one question: here are three hooks and a storyboard, pick one. Then it renders while you go do something else.
+It interrupts you once: here are three hooks and a storyboard, pick one. (Twice, if your brief never said what the video is for.) Then it renders while you go do something else.
 
 Free. MIT. Runs on your machine. Works with the agent you already pay for.
+
+**Status: early.** Version 0.1.0. It works end to end — the example below is a real run — but it has been exercised on a handful of projects, not hundreds. Expect rough edges, and please report them.
 
 ## Install
 
@@ -49,9 +51,11 @@ Add `-g` to install for every project. The [`skills` CLI](https://github.com/ver
 - [Node.js](https://nodejs.org) 22 or newer
 - [FFmpeg](https://ffmpeg.org/download.html) (with `ffprobe`) on your `PATH`
 - Chrome, which renders the frames: `npx hyperframes@0.8.46 browser ensure`
-- The [HyperFrames](https://github.com/heygen-com/hyperframes) skills, which do the rendering: `npx hyperframes@0.8.46 skills update`
+- The [HyperFrames](https://github.com/heygen-com/hyperframes) skills, which do the rendering: `npx hyperframes@0.8.46 skills update hyperframes-core hyperframes-animation hyperframes-creative hyperframes-keyframes hyperframes-cli`
 
 The skill runs `hyperframes doctor` first and tells you exactly what is missing and the command that fixes it. It never installs anything itself.
+
+**One thing to know about that dependency.** `/shortform` pins the HyperFrames CLI to `0.8.46`, but the HyperFrames *skills* above install from the upstream repository's `main` branch — there is no version to pin, and nothing records which state you got. Upstream changes to those skills can therefore change how your videos come out with no change in this repository. The pin is raised here deliberately, one pull request at a time; the skills underneath move on their own.
 
 ## Use it
 
@@ -116,7 +120,7 @@ A landscape demo cropped to 9:16 dies in a feed. The scroll is ruthless and you 
 - **Sound-off first.** Big kinetic captions carry the whole message. Music adds energy; it is never needed to understand the video.
 - **Safe zones.** Every readable element stays clear of the username, caption, buttons and progress bar that TikTok, Shorts and Reels draw over your video.
 - **Phone-sized type.** Minimum sizes, word limits per card, and hold times so text can be read.
-- **Something changes every 2–3 seconds,** and cuts land on the beat of the music.
+- **Something changes every 2–3 seconds,** and cuts snap to the beat where the track has one. Read time wins over beat sync when they disagree; `plan.md` records which cuts snapped.
 - **One call to action, then a loop.** The last frame cuts cleanly into the first, so rewatches count.
 - **Nothing made up.** Every claim and number on screen is traced to your project or your brief in `plan.md`.
 
@@ -152,6 +156,7 @@ Issues and pull requests are welcome, most of all "this video came out wrong" re
 
 - Inspired by [brag](https://github.com/latent-spaces/brag) by Shunit Haviv Hakimi, which showed how good a one-command project video can be.
 - Rendering by [HyperFrames](https://github.com/heygen-com/hyperframes).
+- The example composition animates with [GSAP](https://gsap.com) (bundled at `examples/paidly/shortform-output/composition/assets/gsap.min.js`, under GreenSock's own licence, not MIT).
 - Music by Of Far Different Nature, omfgdude, Emma_MA and congusbongus, via [OpenGameArt](https://opengameart.org), all CC0.
 
 ## License

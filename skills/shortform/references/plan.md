@@ -69,8 +69,14 @@ Every row needs real text and a concrete visual. "Feature highlight" is not a vi
 <table>
 
 ## Claims check
-<each claim or number on screen → where in the source or brief it comes from>
+| On screen (exact string) | Source |
+|---|---|
+| "6 hours a week" | README.md:12 |
+| "€9/mo" | pricing.tsx:40 |
+| "invoices paid 30 days late" | the brief |
 ```
+
+Every number, price, date, name, quote and comparative that will appear on screen gets a row, quoted exactly as it will be rendered, with the file and line or the brief it came from. Step 4 gates on this table: anything on screen that is not in it gets cut. If a claim would make the video better and no source supports it, it does not go in — not softened, not hedged, cut.
 
 ## Approval message
 

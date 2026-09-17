@@ -40,6 +40,8 @@ CI runs both of these, on the same pinned versions, plus the manifest, symlink, 
 - **Music must be CC0 or public domain**, with the licence stated on the source page. Add it to `assets/music/CREDITS.md` in the same pull request. Keep each track near 1MB.
 - **Bump the version** in `.claude-plugin/plugin.json` when the skill's behaviour changes.
 - **Keep the hyperframes CLI pinned.** Every command in the skill says `npx hyperframes@<version>`, and CI fails on a bare `npx hyperframes`. Raising the pin is its own pull request: change every occurrence, re-run the example end to end, and say in the description what the new version changed.
+- **Know what the pin does not cover.** The hyperframes *domain* skills (`hyperframes-core` and friends) install from upstream `main` with no ref and no version marker, so their guidance can change without any change here. If a video regresses and this repo did not move, suspect them first — `~/.agents/.skill-lock.json` records a content hash per skill, which at least tells you whether the bytes changed.
+- **Compositions ship their assets.** No CDN references, no absolute paths outside the composition directory. A render must work with the network down; a blocked CDN does not fail the render, it silently drops the animation.
 
 ## Reporting a bad video
 

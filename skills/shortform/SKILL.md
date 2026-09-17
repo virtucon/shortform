@@ -33,7 +33,9 @@ Extract from the brief, in the user's words where possible:
 | Music (`off`, a mood, or a file path) | on, mood matched to tone |
 | Voiceover | off |
 
-If the brief has no objective, ask exactly one question: "What should this video achieve, and for whom?" If you cannot ask (non-interactive run), assume `announce-launch` for a project and `educate` for a topic, and say so in the plan.
+If the brief has no objective, ask exactly one question: "What should this video achieve, and for whom?" If you cannot ask, assume `announce-launch` for a project and `educate` for a topic, and say so in the plan's Assumptions line.
+
+**"Cannot ask" means:** the brief says to go straight through ("just do it", "no questions", "don't ask"), or you are running somewhere no one will answer — a scheduled or CI run, a hook, a subagent with no channel back to the user. Anywhere a person is reading your output as it appears, you can ask. When unsure, ask: one question costs a few seconds, a video built for the wrong objective costs the whole run.
 
 **Subject.** If the working directory holds a project, the video is about that project. If it holds no project, or the brief says to ignore it, run brief-only: the brief is the whole source.
 
@@ -52,6 +54,8 @@ Everything goes in `shortform-output/`. If that directory exists, use `shortform
 Paths such as `assets/music/` and `references/` in this skill are relative to the directory containing this SKILL.md. Resolve them from there, never from a hardcoded home-directory path.
 
 **Pinned CLI.** Every command in this skill runs `npx hyperframes@0.8.46`. Use that exact version; do not drop the pin for `npx hyperframes`, whose newest release can change flags and output shape under you. The pin is raised deliberately, in one pull request that re-runs the example.
+
+The pin covers the CLI only. The hyperframes domain skills read in Step 3 install from upstream `main` and carry no version, so their guidance can change under a fixed CLI pin. When their mechanics and this skill's format or story rules disagree, `compose.md` says which wins.
 
 ## Step 0: Preflight
 
@@ -72,7 +76,7 @@ If a required check fails, stop and tell the user what is missing and how to fix
 | Node.js (needs 22+) | install from https://nodejs.org |
 | FFmpeg / FFprobe | `brew install ffmpeg`, `apt install ffmpeg`, or https://ffmpeg.org/download.html |
 | Chrome | `npx hyperframes@0.8.46 browser ensure` |
-| hyperframes skills | `npx hyperframes@0.8.46 skills update` (installs the core set) |
+| hyperframes skills | `npx hyperframes@0.8.46 skills update <name> …`, naming each missing skill. Bare `skills update` refreshes what is already installed and does not expand a partial install, so a skill that was never there stays missing. |
 | anything else | relay the `hint` field from that doctor check |
 
 **Gate:** the four required checks pass and the five skills are readable.

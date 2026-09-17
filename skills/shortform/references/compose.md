@@ -12,7 +12,9 @@ cd composition
 
 `--resolution portrait` scaffolds the 1080×1920 canvas. `HYPERFRAMES_SKIP_SKILLS=1` stops `init` from linking skills into agent directories outside the output folder. Delete the `CLAUDE.md` and `AGENTS.md` that `init` writes into the composition; they route to the generic hyperframes workflow, which this skill replaces.
 
-Confirm the scaffold's root element says `data-width="1080" data-height="1920"`, and that any `body` or stage size in its CSS is 1080×1920 too. Keep the scaffold's `data-composition-id` and its matching `window.__timelines` key as they are. Set the root's `data-duration` to the planned length.
+**The composition is `composition/index.html`.** That one file is what `check`, `render` and `snapshot` read; they default to `index.html` at the composition root and nothing else is picked up. Write every scene into it. A scene file elsewhere (`compositions/scene.html`, `scenes/`) renders the empty scaffold with no error.
+
+Confirm the scaffold's root element says `data-width="1080" data-height="1920"`, and that any `body` or stage size in its CSS is 1080×1920 too. `data-composition-id` may be the scaffold's or a descriptive name of your own — whatever it says, its `window.__timelines` key must match it exactly. Set the root's `data-duration` to the planned length.
 
 The approval gate in Step 2 is the user's sign-off. It replaces any "preview and get approval before render" step in the hyperframes skills.
 
@@ -24,11 +26,12 @@ HyperFrames lint wants fonts loaded from local files. If the project's font is a
 
 ## Assets
 
-Copy everything the composition uses into `composition/assets/` and reference it by relative path. Never point at files outside the composition directory; renders must not depend on where this skill is installed.
+Copy everything the composition uses into `composition/assets/` and reference it by relative path. Never point at files outside the composition directory, and never at a CDN; renders must not depend on where this skill is installed or on the network being up. A blocked CDN does not fail the render — it produces a video with the animation silently missing.
 
 - Logo, icons and images from the project.
 - User media named in the brief.
 - The chosen music track, copied from this skill's `assets/music/` (resolve relative to the skill's own directory) or from the user's path.
+- Any JavaScript animation library. If the composition uses GSAP, save it to `composition/assets/gsap.min.js` and load it from there. The composition must still render with the machine offline.
 
 ## Music
 
@@ -40,6 +43,7 @@ Copy everything the composition uses into `composition/assets/` and reference it
 
 - Volume 0.4 without voiceover, 0.13 under voiceover.
 - The bundled tracks are 60s. Set `data-duration` to the video length. End the video on a beat so the loop does not cut mid-phrase.
+- **Always fade the music out.** The track is longer than the video, so without a fade every video ends on a hard chop at full volume. Ramp the music element's volume to 0 over the last 0.8s, landing on the final frame — a `data-volume` keyframe or a timeline tween on the audio, whichever the hyperframes audio skill gives you. Fade the audio only: the picture holds the CTA fully readable to the last frame (Law 8). The fade is the one permitted exception to "no trailing silence" in `vertical.md` — it is a landing, not dead air.
 - Beat grid: run `npx hyperframes@0.8.46 beats` in the composition directory. It writes `beats/<audio path>.json` as `{"beats": [{"time", "strength"}, …]}`. The raw grid is far too dense to be useful (several beats a second), so reduce it first: keep the strongest third of the beats by `strength`, then thin to roughly one every 1–2 seconds across the whole video. Snap scene changes to the nearest of those when the shift is under 0.3s; otherwise keep the planned time. If the command finds no beats or fails, carry on with planned times.
 
 ## Kinetic captions
@@ -73,6 +77,8 @@ Generate narration with `npx hyperframes@0.8.46 tts`. Run `npx hyperframes@0.8.4
 npx hyperframes@0.8.46 check
 ```
 
-Fix every error, including contrast and overflow findings, and re-run until clean. Then walk the checklist at the end of `vertical.md`. `check` does not know about platform safe zones; that part is on you.
+Fix every error, including contrast and overflow findings, and re-run. Give it at most **three** fix-and-re-run rounds: if `check` still reports errors after the third, stop, and tell the user what is failing, what you tried and where the composition is. Do not loop further — the next step renders, and a broken composition wastes minutes per attempt.
+
+Then walk the checklist at the end of `vertical.md`. `check` does not know about platform safe zones; that part is on you.
 
 For a visual check, `npx hyperframes@0.8.46 snapshot` writes key frames as PNGs. Look at the first frame, one mid scene and the last frame: is the hook readable, is everything inside the safe rectangle, does the last frame match the first?

@@ -15,6 +15,8 @@ left     60px
 right   160px   like / comment / share column
 ```
 
+**Provenance.** Last reviewed **2026-09-17**. These are deliberately conservative margins — the widest overlay on each edge across the three apps, rounded up — not figures published by any platform. No platform guarantees a safe area, the UI moves between app versions, and it varies by device and by whether the viewer opened the video from a feed, a profile or a share link. Treat the table as a floor that ages: if you see text sitting under the UI in a current app, report it with a screenshot (see CONTRIBUTING) so the numbers can be raised.
+
 Safe rectangle: **x 60–920, y 250–1440** (860 × 1190). Its centre is at x 490, y 845 — left of and above the canvas centre. Centre text on the safe rectangle, not the canvas.
 
 These margins are conservative approximations; platform UI changes and varies by device. When the brief names one platform, you may relax to:
@@ -47,10 +49,11 @@ Phones are small and viewers are moving. Go bigger than feels right on a desktop
 | Hook / headline | 110–160px | 800–900 | 8 words, 3 lines |
 | Kinetic caption | 80–110px | 700–900 | 4 words, 2 lines |
 | Supporting label | 48–64px | 600 | 1 line |
-| Minimum for anything | 40px | — | — |
+| Minimum for anything readable | 40px | — | — |
 
 - At 110px a line in the 860px safe width holds about 14 characters. If the hook does not fit in 3 lines at 110px, shorten it, move part of the phrase into the scene's visual (an email subject, a label), or take the next-ranked hook. Never shrink the hook below 110px and never let a line break strand one short word or a closing quote.
 - Line height 1.0–1.15 for headlines. Tight tracking on large display text.
+- The 40px floor covers anything the viewer reads for meaning. Decorative glyphs that carry none — a tick inside a checkbox, a bullet, an arrow — may go smaller, provided the words beside them do not.
 - Contrast: text meets WCAG AA against whatever is behind it at every frame. Over busy visuals, use a solid pill, a heavy stroke or a scrim behind the text.
 - Use the project's fonts (see Fonts in `compose.md`); otherwise one bold grotesque for everything. Weights in the table are targets; use the heaviest the family offers.
 
@@ -76,15 +79,18 @@ Phones are small and viewers are moving. Go bigger than feels right on a desktop
 The last frame must cut into the first without a jolt:
 
 - The CTA scene uses the same background the hook scene starts on.
-- The CTA stays settled and fully readable on the final frame. No exit animation, no fade to black, no end slate, no trailing silence.
+- The CTA stays settled and fully readable on the final frame. No exit animation, no fade to black, no end slate, no dead air. The music's 0.8s fade-out (see `compose.md`) is not dead air; a hard chop at full volume is the failure this rule exists to prevent.
 - The hook's entrance motion is what makes the restart feel like a cut rather than a stop.
 
 ## Checklist (gate for Step 3)
 
+- [ ] The whole composition is in `composition/index.html`.
 - [ ] Root element is `data-width="1080" data-height="1920"`.
+- [ ] Every asset the composition loads sits in `composition/assets/` — no CDN, no absolute path off the composition directory.
+- [ ] Music fades out over the last 0.8s (unless the brief said no music).
 - [ ] Every readable element sits inside the safe rectangle, checked by looking at snapshots (`check` cannot see safe zones).
 - [ ] Each scene's content is vertically centred in the safe rectangle and fills at least two thirds of its height.
-- [ ] No text under 40px; hook at least 110px.
+- [ ] No readable text under 40px; hook at least 110px.
 - [ ] Hook text is visible on frame 1.
 - [ ] No gap longer than 3 seconds without a visual change.
 - [ ] Every text element meets its read time.
