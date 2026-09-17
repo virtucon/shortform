@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="400" viewBox="0 0 1000 400" role="img" aria-labelledby="title desc">
+  <title id="title">What lands in shortform-output</title>
+  <desc id="desc">A run writes shortform.mp4 at 1080 by 1920 and 30fps, cover.jpg picked on the hook, post.md with the caption and hashtags, plan.md with the storyboard and every decision, and a composition folder you can edit and re-render.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" x2="1" y1="0" y2="1"><stop stop-color="#14213d"/><stop offset="1" stop-color="#243b63"/></linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="6" stdDeviation="0" flood-color="#0c1528" flood-opacity=".45"/></filter>
+  </defs>
+  <rect width="1000" height="400" rx="28" fill="url(#bg)"/>
+  <text x="40" y="54" fill="#fffaf0" font-family="Arial, sans-serif" font-size="22" font-weight="700">shortform-output/</text>
+  <text x="40" y="78" fill="#8fa0bd" font-family="Arial, sans-serif" font-size="14">one folder, everything you need to post</text>
+
+  <g filter="url(#shadow)" font-family="Arial, sans-serif">
+    <rect x="40" y="100" width="920" height="52" rx="12" fill="#2ec4a0"/>
+    <text x="64" y="132" fill="#14213d" font-family="monospace" font-size="17" font-weight="700">shortform.mp4</text>
+    <text x="300" y="132" fill="#0d6451" font-size="15">1080×1920, 30fps, ready to upload</text>
+
+    <rect x="40" y="160" width="920" height="52" rx="12" fill="#fffaf0"/>
+    <text x="64" y="192" fill="#14213d" font-family="monospace" font-size="17" font-weight="700">cover.jpg</text>
+    <text x="300" y="192" fill="#63708a" font-size="15">a cover frame, picked on the hook</text>
+
+    <rect x="40" y="220" width="920" height="52" rx="12" fill="#ffd166"/>
+    <text x="64" y="252" fill="#14213d" font-family="monospace" font-size="17" font-weight="700">post.md</text>
+    <text x="300" y="252" fill="#725c13" font-size="15">caption, hashtags, Shorts title, pre-post checklist</text>
+
+    <rect x="40" y="280" width="920" height="52" rx="12" fill="#fffaf0"/>
+    <text x="64" y="312" fill="#14213d" font-family="monospace" font-size="17" font-weight="700">plan.md</text>
+    <text x="300" y="312" fill="#63708a" font-size="15">the storyboard and every decision made</text>
+
+    <rect x="40" y="340" width="920" height="52" rx="12" fill="#fffaf0"/>
+    <text x="64" y="372" fill="#14213d" font-family="monospace" font-size="17" font-weight="700">composition/</text>
+    <text x="300" y="372" fill="#63708a" font-size="15">the HyperFrames project — edit it and re-render</text>
+  </g>
+</svg>
